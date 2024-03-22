@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const customerSchema = mongoose.Schema(
   {
@@ -35,5 +35,4 @@ const customerSchema = mongoose.Schema(
   { timestaps: true }
 );
 
-const customerMod = mongoose.model("Customer", customerSchema);
-module.exports = customerMod;
+export default mongoose.model("customer", customerSchema);

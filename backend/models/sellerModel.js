@@ -1,8 +1,12 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const sellerSchema = mongoose.Schema(
   {
-    company: {
+    shop_name: {
+      type: String,
+      required: true,
+    },
+    owner_name: {
       type: String,
       required: true,
     },
@@ -42,7 +46,7 @@ const sellerSchema = mongoose.Schema(
       default:
         "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
     },
-    pic: [
+    pics: [
       {
         type: String,
       },
@@ -52,9 +56,12 @@ const sellerSchema = mongoose.Schema(
       required: true,
       default: true,
     },
+    shop_type: {
+      type: String,
+      required: true,
+    },
   },
   { timestaps: true }
 );
 
-const sellerMod = mongoose.model("Seller", sellerSchema);
-module.exports = sellerMod;
+export default mongoose.model("seller", sellerSchema);
