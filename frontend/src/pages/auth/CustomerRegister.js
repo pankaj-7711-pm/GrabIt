@@ -11,9 +11,12 @@ import {
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import OtpModal from "./OtpModal";
+// import { ConState } from "../../context/ConProvider";
 
 const CustomerRegister = () => {
   const toast = useToast();
+  // const { user, setUser } = ConState();
   const [show, setShow] = useState(false);
   const [otp, setOtp] = useState();
   const [rotp, setRotp] = useState();
@@ -117,7 +120,7 @@ const CustomerRegister = () => {
 
   const submitHandler = async () => {
     setPicLoading(true);
-    if (!name || !email || !password || !confirmpassword) {
+    if (!name || !email || !password || !confirmpassword || !phone) {
       toast({
         title: "Please Fill all the Feilds",
         status: "warning",
@@ -138,42 +141,37 @@ const CustomerRegister = () => {
       });
       return;
     }
-    console.log(name, email, password, pic);
+    // console.log(name, email, password, pic);
     try {
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
       const { data } = await axios.post(
-        "/api/user",
+        "/api/v1/auth/register-customer",
         {
           name,
           email,
           password,
           pic,
-        },
-        config
+          phone
+        }
       );
-      console.log(data);
+      // console.log(data);
       if (data?.success) {
         toast({
           title: "Registration Successful",
           status: "success",
           duration: 5000,
           isClosable: true,
-          position: "bottom",
+          position: "top",
         });
-        localStorage.setItem("userInfo", JSON.stringify(data));
+        // localStorage.setItem("userInform", JSON.stringify(data));
         setPicLoading(false);
-        navigate("/chats");
+        navigate("/login");
       } else {
         toast({
           title: data.message,
           status: "error",
           duration: 5000,
           isClosable: true,
-          position: "bottom",
+          position: "top",
         });
       }
     } catch (error) {
@@ -183,11 +181,16 @@ const CustomerRegister = () => {
         status: "error",
         duration: 5000,
         isClosable: true,
-        position: "bottom",
+        position: "top",
       });
       setPicLoading(false);
     }
   };
+
+
+  const setVerifiation = () => {
+    setVerified(true);
+  }
 
   return (
     <div style={{}}>
@@ -196,6 +199,7 @@ const CustomerRegister = () => {
         <Input
           placeholder="Enter your name"
           onChange={(e) => setName(e.target.value)}
+          className="mb-2"
         />
       </FormControl>
       <FormControl id="email" isRequired>
@@ -220,16 +224,25 @@ const CustomerRegister = () => {
             </>
           )}
         </InputGroup>
-        {otpSent === true && (
+        {otpSent === true && verified === false && (
           <>
-            <div style={{ display: "flex" }}>
+            <div className="mb-2" style={{ display: "flex" }}>
               <FormHelperText style={{ color: "green" }}>
-                OTP Sent <span style={{ color: "green" }}>Successfully</span>.{" "}
+                OTP Sent <span>Successfully</span>.{" "}
               </FormHelperText>
-              <FormHelperText style={{ marginLeft: "5px", color: "blue" }}>
-                Enter OTP
-              </FormHelperText>
+              <OtpModal email={email} otp={otp} verified={setVerifiation}>
+                <FormHelperText style={{ marginLeft: "5px", color: "blue" }}>
+                  Enter OTP
+                </FormHelperText>
+              </OtpModal>
             </div>
+          </>
+        )}
+        {otpSent === true && verified === true && (
+          <>
+            <FormHelperText className="mb-2" style={{ color: "green" }}>
+              Email Verified Successfully
+            </FormHelperText>
           </>
         )}
       </FormControl>
@@ -238,6 +251,7 @@ const CustomerRegister = () => {
         <Input
           placeholder="Enter your Phone Number"
           onChange={(e) => setPhone(e.target.value)}
+          className="mb-2"
         />
       </FormControl>
       <FormControl id="password" isRequired>
@@ -247,6 +261,7 @@ const CustomerRegister = () => {
             type={show ? "text" : "password"}
             placeholder="Enter your Password"
             onChange={(e) => setPassword(e.target.value)}
+            className="mb-2"
           />
           <InputRightElement width={"4.5rem"}>
             <Button h={"1.75rem"} size="sm" onClick={handleClick}>
@@ -262,6 +277,7 @@ const CustomerRegister = () => {
             type={show ? "text" : "password"}
             placeholder="Confirm password"
             onChange={(e) => setConfirmpassword(e.target.value)}
+            className="mb-2"
           />
           <InputRightElement width="4.5rem">
             <Button h="1.75rem" size="sm" onClick={handleClick}>
@@ -277,6 +293,7 @@ const CustomerRegister = () => {
           p={1.5}
           accept="image/*"
           onChange={(e) => postDetails(e.target.files[0])}
+          className="mb-2"
         />
       </FormControl>
       {verified === false ? (
