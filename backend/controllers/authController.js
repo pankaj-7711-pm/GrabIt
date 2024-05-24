@@ -2,6 +2,9 @@ import sellerModel from "../models/sellerModel.js";
 import customerModel from "../models/customerModel.js";
 import { comparePassword, hashPassword } from "../middlewares/authMiddleware.js";
 import JWT from "jsonwebtoken";
+import { json } from "express";
+import nodemailer from "nodemailer";
+import dotenv from "dotenv";
 
 export const registerCustomerController = async (req, res) => {
   try {
@@ -225,5 +228,34 @@ export const loginSellerController = async (req, res) => {
       message: "Error in Login",
       error,
     });
+  }
+};
+
+export const sendOtpController = async (req, res) => {
+  const { email } = req.body;
+  const temp = Math.floor(1000 + Math.random() * 9000);
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.MAIL_M,
+      pass: process.env.PASS,
+    },
+  });
+  const mailOptions = {
+    from: "pankajmandalplt58@gmail.com",
+    to: email,
+    subject: "Welcome to GrabIt",
+    text: `Hii User your OTP for registration is ${temp}. Enter it in your registration page to verify your email.`,
+  };
+  try {
+    const result = await transporter.sendMail(mailOptions);
+    console.log("Eamil sent successfully");
+    res.send({
+      success: true,
+      message: "Otp generated Successfully",
+      temp,
+    });
+  } catch (error) {
+    console.log(error);
   }
 };
