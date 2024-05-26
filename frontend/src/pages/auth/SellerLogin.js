@@ -125,6 +125,9 @@ const SellerLogin = () => {
         >
           Sign in
         </Button>
+        <p style={{ fontWeight: "lighter", marginTop:"1rem", marginBottom:"0" }}>
+          Don't have an account? <span style={{ color: "blue", cursor:"pointer"}} onClick={()=>navigate("/register")}>Sign up</span>
+        </p>
       </div>
     </div>
   );

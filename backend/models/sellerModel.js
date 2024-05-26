@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
 const sellerSchema = mongoose.Schema({
-  shop_name: {
+  name: {
     type: String,
     required: true,
   },
-  owner_name: {
+  owner: {
     type: String,
     required: true,
   },
@@ -39,7 +39,7 @@ const sellerSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  profile_pic: {
+  pic: {
     type: String,
     required: true,
     default:
@@ -55,7 +55,7 @@ const sellerSchema = mongoose.Schema({
     required: true,
     default: true,
   },
-  shop_type: {
+  type: {
     type: String,
     required: true,
   },

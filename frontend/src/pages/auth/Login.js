@@ -6,14 +6,14 @@ import SellerLogin from "./SellerLogin";
 
 const Login = () => {
   return (
-    <Layout title={"Login to continue"}>
+    // <Layout title={"Login to continue"}>
       <div
         style={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          minHeight: "60vh",
+          minHeight: "100vh",
         }}
       >
         <h1 className="text-center pt-3 pb-2 login-text">Login</h1>
@@ -72,7 +72,7 @@ const Login = () => {
           </Tabs>
         </div>
       </div>
-    </Layout>
+    // </Layout>
   );
 };
 

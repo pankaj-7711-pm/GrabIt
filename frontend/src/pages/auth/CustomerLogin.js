@@ -92,7 +92,7 @@ const CustomerLogin = () => {
         alignItems: "center",
       }}
     >
-      <div style={{width:"16rem"}}>
+      <div style={{ width: "16rem" }}>
         <FormControl id="email" isRequired>
           <FormLabel>Email address</FormLabel>
           <Input
@@ -100,12 +100,11 @@ const CustomerLogin = () => {
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            
           />
         </FormControl>
         <FormControl id="password" isRequired>
           <FormLabel>Password</FormLabel>
-          <InputGroup >
+          <InputGroup>
             <Input
               type={show ? "text" : "password"}
               placeholder="Enter your Password"
@@ -128,6 +127,21 @@ const CustomerLogin = () => {
         >
           Sign in
         </Button>
+        <p
+          style={{
+            fontWeight: "lighter",
+            marginTop: "1rem",
+            marginBottom: "0",
+          }}
+        >
+          Don't have an account?{" "}
+          <span
+            style={{ color: "blue", cursor: "pointer" }}
+            onClick={() => navigate("/register")}
+          >
+            Sign up
+          </span>
+        </p>
       </div>
     </div>
   );

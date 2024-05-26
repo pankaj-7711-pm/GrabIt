@@ -86,8 +86,7 @@ const handleLogout = () => {
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      {user?.user?.isSeller === true && user.user.shop_name}
-                      {user?.user?.isSeller === false && user.user.name}
+                      {user.user.name}
                     </Link>
                     <ul className="dropdown-menu">
                       <li>
