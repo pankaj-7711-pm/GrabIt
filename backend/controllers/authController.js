@@ -57,8 +57,8 @@ export const registerCustomerController = async (req, res) => {
 export const registerSellerController = async (req, res) => {
   try {
     const {
-      shop_name,
-      owner_name,
+      name,
+      owner,
       address,
       pincode,
       phone,
@@ -66,15 +66,17 @@ export const registerSellerController = async (req, res) => {
       state,
       email,
       password,
-      profile_pic,
+      pic,
       pics,
-      shop_type,
+      type,
+      isSeller,
+    
     } = req.body;
 
     //validation
     if (
-      !shop_name ||
-      !owner_name ||
+      !name ||
+      !owner ||
       !address ||
       !pincode ||
       !phone ||
@@ -82,7 +84,7 @@ export const registerSellerController = async (req, res) => {
       !state ||
       !email ||
       !password ||
-      !shop_type
+      !type
     ) {
       return res.send({ message: "All fields are required" });
     }
@@ -103,8 +105,8 @@ export const registerSellerController = async (req, res) => {
 
     //save
     const user = new sellerModel({
-      shop_name,
-      owner_name,
+      name,
+      owner,
       address,
       pincode,
       phone,
@@ -112,15 +114,15 @@ export const registerSellerController = async (req, res) => {
       state,
       email,
       password: hashedPassword,
-      profile_pic,
+      pic,
       pics,
-      shop_type,
+      type,
       isSeller: true,
     });
     await user.save();
     res.status(201).send({
       success: true,
-      message: "User Registered Successfully",
+      message: "Registered Successfully",
       user,
     });
   } catch (error) {

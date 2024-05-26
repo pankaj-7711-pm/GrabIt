@@ -7,6 +7,8 @@ import {
   InputRightElement,
   Button,
   FormHelperText,
+  AvatarGroup,
+  Avatar,
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +25,6 @@ const CustomerRegister = () => {
   // const { user, setUser } = ConState();
   const [show, setShow] = useState(false);
   const [otp, setOtp] = useState();
-  const [rotp, setRotp] = useState();
   const [verified, setVerified] = useState(false);
   const [name, setName] = useState();
   const [owner, setOwner] = useState();
@@ -103,22 +104,12 @@ const CustomerRegister = () => {
     }
   };
 
-  const imagesUpload = (pics) => {
+  const imagesUpload = (p) => {
     setPicLoading(true);
-    if (pics === undefined) {
-      toast({
-        title: "Please Select an Image!",
-        status: "warning",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom",
-      });
-      return;
-    }
 
-    if (pics.type === "image/jpeg" || pics.type === "image/png") {
+    if (p.type === "image/jpeg" || p.type === "image/png") {
       const data = new FormData();
-      data.append("file", pics);
+      data.append("file", p);
       data.append("upload_preset", "chat-app");
       data.append("cloud_name", "duon0scym");
       fetch("https://api.cloudinary.com/v1_1/duon0scym/image/upload", {
@@ -187,13 +178,13 @@ const CustomerRegister = () => {
 
   const submitHandler = async () => {
     setPicLoading(true);
-    if (!name || !email || !password || !confirmpassword || !phone) {
+    if (!name || !owner || !address || !pincode || !city || !state || !type || !email || !password || !confirmpassword || !phone) {
       toast({
         title: "Please Fill all the Feilds",
         status: "warning",
         duration: 5000,
         isClosable: true,
-        position: "bottom",
+        position: "top",
       });
       setPicLoading(false);
       return;
@@ -204,18 +195,26 @@ const CustomerRegister = () => {
         status: "warning",
         duration: 5000,
         isClosable: true,
-        position: "bottom",
+        position: "top",
       });
       return;
     }
-    // console.log(name, email, password, pic);
+    // console.log(`${phone}, ${address}, ${city}`);
     try {
-      const { data } = await axios.post("/api/v1/auth/register-customer", {
+      const { data } = await axios.post("/api/v1/auth/register-seller", {
         name,
+        owner,
+        address,
+        pincode,
+        phone,
+        city,
+        state,
         email,
         password,
         pic,
-        phone,
+        pics,
+        isSeller,
+        type,
       });
       // console.log(data);
       if (data?.success) {
@@ -256,7 +255,7 @@ const CustomerRegister = () => {
   };
 
   const pages = [
-    <Box key="page1" w="100%" h={"500px"}>
+    <div>
       <FormControl id="email" isRequired>
         <FormLabel>Email</FormLabel>
         <InputGroup>
@@ -305,6 +304,7 @@ const CustomerRegister = () => {
         <FormLabel>Phone</FormLabel>
         <Input
           placeholder="Enter your Phone Number"
+          value={phone}
           onChange={(e) => setPhone(e.target.value)}
           className="mb-2"
         />
@@ -334,12 +334,13 @@ const CustomerRegister = () => {
           </Button>
         </>
       )}
-    </Box>,
-    <Box key="page2" w="100%" h={"200px"}>
+    </div>,
+    <div>
       <FormControl id="first-name" isRequired>
         <FormLabel>Name</FormLabel>
         <Input
           placeholder="Enter Shop name"
+          value={name}
           onChange={(e) => setName(e.target.value)}
           className="mb-2"
         />
@@ -348,14 +349,42 @@ const CustomerRegister = () => {
         <FormLabel>Owner name</FormLabel>
         <Input
           placeholder="Enter Owner name"
+          value={owner}
           onChange={(e) => setOwner(e.target.value)}
           className="mb-2"
         />
       </FormControl>
-
+      <FormControl id="shop-type" isRequired>
+        <FormLabel>Shop type</FormLabel>
+        <Input
+          value={type}
+          placeholder="Enter Shop type eg: cloths"
+          onChange={(e) => setType(e.target.value)}
+          className="mb-2"
+        />
+      </FormControl>
+      <Button
+        colorScheme="blue"
+        width={"49%"}
+        style={{ marginTop: 15 }}
+        onClick={handlePrev}
+      >
+        Prev
+      </Button>
+      <Button
+        colorScheme="blue"
+        width={"49%"}
+        style={{ marginTop: 15, marginLeft: "2px" }}
+        onClick={handleNext}
+      >
+        Next
+      </Button>
+    </div>,
+    <div>
       <FormControl id="address" isRequired>
         <FormLabel>Address</FormLabel>
         <Input
+          value={address}
           placeholder="Enter Address"
           onChange={(e) => SetAddress(e.target.value)}
           className="mb-2"
@@ -364,6 +393,7 @@ const CustomerRegister = () => {
       <FormControl id="pincode" isRequired>
         <FormLabel>Pincode</FormLabel>
         <Input
+          value={pincode}
           placeholder="Enter Pincode"
           onChange={(e) => setPincode(e.target.value)}
           className="mb-2"
@@ -372,6 +402,7 @@ const CustomerRegister = () => {
       <FormControl id="city" isRequired>
         <FormLabel>City</FormLabel>
         <Input
+          value={city}
           placeholder="Enter City"
           onChange={(e) => setCity(e.target.value)}
           className="mb-2"
@@ -380,17 +411,32 @@ const CustomerRegister = () => {
       <FormControl id="state" isRequired>
         <FormLabel>State</FormLabel>
         <Input
+          value={state}
           placeholder="Enter State"
           onChange={(e) => setState(e.target.value)}
           className="mb-2"
         />
       </FormControl>
-      <Button onClick={handlePrev}>Prev</Button>
-      <Button onClick={handleNext}>Next</Button>
-    </Box>,
-    <Box key="page3" w="100%" h={"200px"}>
+      <Button
+        colorScheme="blue"
+        width={"49%"}
+        style={{ marginTop: 15 }}
+        onClick={handlePrev}
+      >
+        Prev
+      </Button>
+      <Button
+        colorScheme="blue"
+        width={"49%"}
+        style={{ marginTop: 15, marginLeft: "2px" }}
+        onClick={handleNext}
+      >
+        Next
+      </Button>
+    </div>,
+    <div>
       <FormControl id="pic" isRequired>
-        <FormLabel>Upload your Picture</FormLabel>
+        <FormLabel>Profile picture</FormLabel>
         <Input
           type="file"
           p={1.5}
@@ -399,14 +445,46 @@ const CustomerRegister = () => {
           className="mb-2"
         />
       </FormControl>
-      <Button onClick={handlePrev}>Prev</Button>
-      <Button onClick={handleNext}>Next</Button>
-    </Box>,
-    <Box key="page4" w="100%">
+      <Avatar size="md" src={pic} />
+      <FormControl id="pics" style={{marginTop:"1rem"}} isRequired>
+        <FormLabel>Shop Images</FormLabel>
+        <Input
+          type="file"
+          p={1.5}
+          accept="image/*"
+          onChange={(e) => imagesUpload(e.target.files[0])}
+          className="mb-2"
+        />
+      </FormControl>
+
+      <AvatarGroup size="md" max={3}>
+        {pics.map((p) => {
+          return <Avatar src={p} />;
+        })}
+      </AvatarGroup>
+      <Button
+        colorScheme="blue"
+        width={"49%"}
+        style={{ marginTop: 15 }}
+        onClick={handlePrev}
+      >
+        Prev
+      </Button>
+      <Button
+        colorScheme="blue"
+        width={"49%"}
+        style={{ marginTop: 15, marginLeft: "2px" }}
+        onClick={handleNext}
+      >
+        Next
+      </Button>
+    </div>,
+    <div>
       <FormControl id="password" isRequired>
         <FormLabel>Password</FormLabel>
         <InputGroup>
           <Input
+            value={password}
             type={show ? "text" : "password"}
             placeholder="Enter your Password"
             onChange={(e) => setPassword(e.target.value)}
@@ -423,6 +501,7 @@ const CustomerRegister = () => {
         <FormLabel>Confirm Password</FormLabel>
         <InputGroup size="md">
           <Input
+            value={confirmpassword}
             type={show ? "text" : "password"}
             placeholder="Confirm password"
             onChange={(e) => setConfirmpassword(e.target.value)}
@@ -435,39 +514,33 @@ const CustomerRegister = () => {
           </InputRightElement>
         </InputGroup>
       </FormControl>
-      <Button onClick={handlePrev}>Prev</Button>
-      <Button onClick={submitHandler}>Next</Button>
-    </Box>,
+      <Button
+        colorScheme="blue"
+        width={"49%"}
+        style={{ marginTop: 15 }}
+        onClick={handlePrev}
+      >
+        Prev
+      </Button>
+      <Button
+        colorScheme="blue"
+        width={"49%"}
+        style={{ marginTop: 15, marginLeft: "2px" }}
+        onClick={submitHandler}
+      >
+        Sign Up
+      </Button>
+    </div>,
   ];
 
   return (
-    // <div style={{}}>
-    <div style={{ width: "100%" }}>
-      <div
-        style={{
-          overflow: "hidden",
-          position: "relative",
-          width: "100%",
-          height: "500px",
-        }}
-      >
-        <AnimatePresence>
-          <MotionBox
-            key={page}
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "-100%" }}
-            transition={{ duration: 0.5 }}
-            position="absolute"
-            w="100%"
-            h="100%"
-          >
-            {pages[page]}
-          </MotionBox>
-        </AnimatePresence>
-      </div>
+    <div
+      style={{
+        width: "22.3rem",
+      }}
+    >
+      {pages[page]}
     </div>
-    // </div>
   );
 };
 
