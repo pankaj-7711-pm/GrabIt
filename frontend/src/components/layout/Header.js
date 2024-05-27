@@ -2,27 +2,37 @@ import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { ConState } from "../../context/ConProvider";
-import { useToast } from "@chakra-ui/react";
+import {
+  Avatar,
+  Button,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  useToast,
+} from "@chakra-ui/react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 
 const Header = () => {
-    const navigate = useNavigate();
-    const toast = useToast();
-    const { user,setUser } = ConState();
-const handleLogout = () => {
-  setUser({
-    ...user,
-    user: null,
-    token: "",
-  });
-  localStorage.removeItem("userInform");
-  toast({
-    title: "Logout Successful",
-    status: "success",
-    duration: 5000,
-    isClosable: true,
-    position: "top",
-  });
-};
+  const navigate = useNavigate();
+  const toast = useToast();
+  const { user, setUser } = ConState();
+  const handleLogout = () => {
+    setUser({
+      ...user,
+      user: null,
+      token: "",
+    });
+    localStorage.removeItem("userInform");
+    navigate("/login");
+    toast({
+      title: "Logout Successful",
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+      position: "top",
+    });
+  };
   return (
     <>
       <nav
@@ -76,40 +86,28 @@ const handleLogout = () => {
                 </>
               ) : (
                 <>
-                  <li
-                    className="nav-item dropdown"
-                    style={{ display: "flex", flexDirection: "row" }}
-                  >
-                    <Link
-                      className="nav-link dropdown-toggle"
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      {user.user.name}
-                    </Link>
-                    <ul className="dropdown-menu">
-                      <li>
-                        <NavLink
-                          to={`/dashboard/${
-                            user?.user?.isSeller === false ? "user" : "seller"
-                          }`}
-                          className="dropdown-item p-3"
-                        >
-                          Dashboard
-                        </NavLink>
-                      </li>
-                      <li>
-                        <NavLink
-                          onClick={handleLogout}
-                          to="/login"
-                          className="dropdown-item p-3"
-                        >
-                          Logout
-                        </NavLink>
-                      </li>
-                    </ul>
-                  </li>
+                  <Menu>
+                    <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                      <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+                        <Avatar size="sm" src={user?.user?.pic} />
+                        &nbsp;{user?.user?.name}
+                      </div>
+                    </MenuButton>
+                    <MenuList>
+                      <MenuItem
+                        onClick={() =>
+                          navigate(
+                            `/dashboard/${
+                              user?.user?.isSeller === false ? "user" : "seller"
+                            }`
+                          )
+                        }
+                      >
+                        Dashboard
+                      </MenuItem>
+                      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                    </MenuList>
+                  </Menu>
                 </>
               )}
             </ul>
