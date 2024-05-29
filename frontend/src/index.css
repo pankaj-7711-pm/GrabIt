@@ -24,6 +24,7 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
+  
 }
 
 .aa{
@@ -32,4 +33,25 @@ body{
 
 .login-text{
   font-family: "Merriweather", serif;
+}
+
+@media (max-width: 1417px)  {
+  .seller-dash-img{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 0 !important;
+    /* background-color: aqua; */
+  }
+  .seller-dash-details{
+    /* padding: 0 !important; */
+    margin-left: 0 !important;
+    margin-top: 1rem;
+    height: 20rem !important;
+  }
+
+  .seller-dash-btn{
+    margin-left: 0 !important;
+    margin-top: 3px !important;
+  }
 }
