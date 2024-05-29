@@ -61,6 +61,7 @@ export const registerSellerController = async (req, res) => {
       owner,
       address,
       pincode,
+      discription,
       phone,
       city,
       state,
@@ -84,7 +85,7 @@ export const registerSellerController = async (req, res) => {
       !state ||
       !email ||
       !password ||
-      !type
+      !type || !discription
     ) {
       return res.send({ message: "All fields are required" });
     }
@@ -109,6 +110,7 @@ export const registerSellerController = async (req, res) => {
       owner,
       address,
       pincode,
+      discription,
       phone,
       city,
       state,

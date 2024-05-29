@@ -16,6 +16,7 @@ import axios from "axios";
 import OtpModal from "./OtpModal";
 import { Box } from "@chakra-ui/react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Textarea } from "@chakra-ui/react";
 
 const MotionBox = motion(Box);
 // import { ConState } from "../../context/ConProvider";
@@ -26,22 +27,23 @@ const CustomerRegister = () => {
   const [show, setShow] = useState(false);
   const [otp, setOtp] = useState();
   const [verified, setVerified] = useState(false);
-  const [name, setName] = useState();
-  const [owner, setOwner] = useState();
-  const [address, SetAddress] = useState();
-  const [pincode, setPincode] = useState();
-  const [phone, setPhone] = useState();
-  const [city, setCity] = useState();
-  const [state, setState] = useState();
+  const [name, setName] = useState("");
+  const [owner, setOwner] = useState("");
+  const [discription, setDiscription] = useState("");
+  const [address, SetAddress] = useState("");
+  const [pincode, setPincode] = useState("");
+  const [phone, setPhone] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
   const [email, setEmail] = useState();
   const [otpSent, setOtpSent] = useState(false);
-  const [password, setPassword] = useState();
-  const [confirmpassword, setConfirmpassword] = useState();
+  const [password, setPassword] = useState("");
+  const [confirmpassword, setConfirmpassword] = useState("");
   const [pic, setPic] = useState();
   const [pics, setPics] = useState([]);
   const [picLoading, setPicLoading] = useState(false);
   const [isSeller, setIsSeller] = useState(true);
-  const [type, setType] = useState();
+  const [type, setType] = useState("");
 
   const [page, setPage] = useState(0);
 
@@ -186,7 +188,18 @@ const CustomerRegister = () => {
         isClosable: true,
         position: "top",
       });
+      
       setPicLoading(false);
+      return;
+    }
+    if (discription.length < 200) {
+      toast({
+        title: "Discription should be more than 200 characters",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
       return;
     }
     if (password !== confirmpassword) {
@@ -206,6 +219,7 @@ const CustomerRegister = () => {
         owner,
         address,
         pincode,
+        discription,
         phone,
         city,
         state,
@@ -446,7 +460,7 @@ const CustomerRegister = () => {
         />
       </FormControl>
       <Avatar size="md" src={pic} />
-      <FormControl id="pics" style={{marginTop:"1rem"}} isRequired>
+      <FormControl id="pics" style={{ marginTop: "1rem" }} isRequired>
         <FormLabel>Shop Images</FormLabel>
         <Input
           type="file"
@@ -462,6 +476,30 @@ const CustomerRegister = () => {
           return <Avatar src={p} />;
         })}
       </AvatarGroup>
+      <Button
+        colorScheme="blue"
+        width={"49%"}
+        style={{ marginTop: 15 }}
+        onClick={handlePrev}
+      >
+        Prev
+      </Button>
+      <Button
+        colorScheme="blue"
+        width={"49%"}
+        style={{ marginTop: 15, marginLeft: "2px" }}
+        onClick={handleNext}
+      >
+        Next
+      </Button>
+    </div>,
+    <div>
+      <Textarea
+        style={{ height: "40vh" }}
+        onChange={(e) => setDiscription(e.target.value)}
+        value={discription}
+        placeholder="Write detailed description about your shop in more than 200 characters"
+      />
       <Button
         colorScheme="blue"
         width={"49%"}
