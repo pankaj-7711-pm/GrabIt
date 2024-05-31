@@ -5,19 +5,22 @@ import { Button } from "@chakra-ui/react";
 import StarRatingComponent from "react-star-rating-component";
 import Rating from "react-rating";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SellerDashboard = () => {
   const { user, setUser } = ConState();
+  const navigate = useNavigate();
   return (
     <Layout>
-      <div style={{ minHeight: "100vh", padding: "2% 5%" }}>
+      <div style={{ minHeight: "100vh", padding: "0 5%" }}>
         <div
           style={{
             width: "100%",
             minHeight: "100vh",
             border: "1px solid rgb(195, 194, 194)",
             backgroundColor: "white",
-            borderRadius: "5px",
+            // borderRadius: "5px",
           }}
         >
           <div style={{ padding: "5% 5% 1% 5%" }}>
@@ -80,8 +83,17 @@ const SellerDashboard = () => {
                   colorScheme="blue"
                   className="seller-dash-btn"
                   style={{ marginLeft: "3px" }}
+                  onClick={() => navigate("/dashboard/create-product")}
                 >
                   Create Product
+                </Button>
+                <Button
+                  colorScheme="blue"
+                  className="seller-dash-btn"
+                  style={{ marginLeft: "3px" }}
+                  // onClick={() => navigate("/dashboard/create-product")}
+                >
+                  Create Category
                 </Button>
                 <Button
                   colorScheme="blue"

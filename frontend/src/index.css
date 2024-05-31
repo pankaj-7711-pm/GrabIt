@@ -35,6 +35,10 @@ body{
   font-family: "Merriweather", serif;
 }
 
+.create-product-input{
+    margin-top: 1rem !important;
+  }
+
 @media (max-width: 1417px)  {
   .seller-dash-img{
     display: flex !important;
@@ -53,5 +57,20 @@ body{
   .seller-dash-btn{
     margin-left: 0 !important;
     margin-top: 3px !important;
+  }
+
+  .create-product-input{
+    width: 100% !important;
+  }
+
+  .inoffer-input{
+    margin-left: 0 !important;
+  }
+  .inoffer-div{
+    width: 100% !important;
+    margin-top: 1rem !important;
+  }
+  .main-div-create-product{
+    width: 90% !important;
   }
 }
