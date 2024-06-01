@@ -96,13 +96,13 @@ const CreateProduct = () => {
                 }}
               >
                 <FormControlLabel
-                //   required
+                  //   required
                   control={<Switch defaultChecked />}
                   label="Available"
                 />
                 <FormControlLabel
                   className="inoffer-input"
-                //   required
+                  //   required
                   control={<Switch />}
                   label="Offer"
                   style={{ marginLeft: "auto" }}
