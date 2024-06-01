@@ -18,8 +18,8 @@ const SellerDashboard = () => {
           style={{
             width: "100%",
             minHeight: "100vh",
-            border: "1px solid rgb(195, 194, 194)",
-            backgroundColor: "white",
+            // border: "1px solid rgb(195, 194, 194)",
+            // backgroundColor: "white",
             // borderRadius: "5px",
           }}
         >

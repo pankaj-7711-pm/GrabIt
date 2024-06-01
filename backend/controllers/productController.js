@@ -10,7 +10,7 @@ export const createProductController = async (req, res) => {
       pics,
       available,
       inoffer,
-      product_type,
+      category,
       offerPrice,
     } = req.body;
     if (
@@ -18,7 +18,7 @@ export const createProductController = async (req, res) => {
       !description ||
       price === undefined ||
       !pics ||
-      !product_type
+      !category
     ) {
       return res.send({ message: "All fields are required" });
     }
@@ -131,14 +131,14 @@ export const updateProductController = async (req, res) => {
       available,
       inoffer,
       offerPrice,
-      product_type,
+      category,
     } = req.body;
     if (
       !name ||
       !description ||
       price === undefined ||
       !pics ||
-      !product_type
+      !category
     ) {
       return res.send({ message: "All fields are required" });
     }

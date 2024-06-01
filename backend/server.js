@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js"
 import productRoutes from "./routes/productRoutes.js"
+import categoryRoutes from "./routes/categoryRoutes.js"
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 //routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/product", productRoutes);
+app.use("/api/v1/category", categoryRoutes);
 
 app.get("/", (req, res) => {
   res.send("<h1>Welcome to Advertisement app</h1>");

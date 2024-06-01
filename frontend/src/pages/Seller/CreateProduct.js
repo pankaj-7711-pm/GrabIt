@@ -18,7 +18,7 @@ const CreateProduct = () => {
           className="main-div-create-product"
           style={{
             minHeight: "80vh",
-            backgroundColor: "white",
+            // backgroundColor: "white",
             padding: "3rem",
             width: "80%",
           }}

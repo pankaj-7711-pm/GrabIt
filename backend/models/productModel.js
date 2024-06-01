@@ -34,10 +34,11 @@ const productSchema = mongoose.Schema(
     },
     offerPrice: {
       type: Number,
-      default:null,
+      default: null,
     },
     category: {
-      type: String,
+      type: mongoose.ObjectId,
+      ref: "category",
       required: true,
     },
   },
