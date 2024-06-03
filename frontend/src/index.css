@@ -73,4 +73,7 @@ body{
   .main-div-create-product{
     width: 90% !important;
   }
+  .category-inp{
+    width: 80% !important;
+  }
 }

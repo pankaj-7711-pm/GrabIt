@@ -24,8 +24,6 @@ router.put(
 //get category
 router.get(
   "/get-category/:sid",
-  requireSignIn,
-  isSeller,
   getCategoryController
 );
 

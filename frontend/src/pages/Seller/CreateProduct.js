@@ -1,10 +1,33 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import Layout from "../../components/layout/Layout";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { Textarea } from "@chakra-ui/react";
-import { FormControlLabel, Switch } from "@mui/material";
+import { FormControlLabel, MenuItem, Switch } from "@mui/material";
+import axios from "axios";
+import { ConState } from "../../context/ConProvider";
+import { Select } from "@chakra-ui/react";
 const CreateProduct = () => {
+  const { user } = ConState();
+  const [categories, setCategories] = useState([]);
+  
+  const getCategories = async () => {
+    try {
+      const { data } = await axios.get(
+        `/api/v1/category/get-category/${user?.user?._id}`
+      );
+      setCategories(data?.category);
+      console.log(categories);
+      
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+
   return (
     <Layout>
       <div
@@ -43,7 +66,10 @@ const CreateProduct = () => {
               />
               <Textarea
                 className="create-product-input"
-                style={{ height: "40vh", width: "60%" }}
+                style={{
+                  height: "40vh",
+                  width: "60%",
+                }}
                 // onChange={(e) => setDiscription(e.target.value)}
                 // value={discription}
                 placeholder="Write detailed description about your Product in more than 200 characters"
@@ -57,19 +83,39 @@ const CreateProduct = () => {
                 }}
               >
                 <TextField
-                  style={{ width: "48%" }}
+                  style={{ width: "49%" }}
                   id="outlined-basic"
                   label="Price"
                   variant="outlined"
                   required
                 />
+                {/* <div style={{ width: "49%" }}>
+                  <Select
+                    style={{ height: "3.6rem" }}
+                    placeholder="Select Category"
+                  >
+                    {categories?.map((item) => {
+                      return <option value={item._id}>{item.name}</option>;
+                    })}
+                  </Select>
+                </div> */}
                 <TextField
-                  style={{ width: "48%" }}
-                  id="outlined-basic"
-                  label="Category"
-                  variant="outlined"
-                  required
-                />
+                  style={{ width: "49%" }}
+                  id="outlined-select-currency-native"
+                  select
+                  // label="Category"
+                  // defaultValue="None"
+                  SelectProps={{
+                    native: true,
+                  }}
+                  helperText="Select Category"
+                >
+                  {categories.map((option) => (
+                    <option  value={option._id}>
+                      {option.name}
+                    </option>
+                  ))}
+                </TextField>
               </div>
 
               <label

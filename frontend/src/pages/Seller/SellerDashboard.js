@@ -91,7 +91,7 @@ const SellerDashboard = () => {
                   colorScheme="blue"
                   className="seller-dash-btn"
                   style={{ marginLeft: "3px" }}
-                  // onClick={() => navigate("/dashboard/create-product")}
+                  onClick={() => navigate("/dashboard/create-category")}
                 >
                   Create Category
                 </Button>
