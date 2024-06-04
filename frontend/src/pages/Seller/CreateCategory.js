@@ -32,14 +32,17 @@ const CreateCategory = () => {
   const toast = useToast();
   const { user } = ConState();
   const [open, setOpen] = useState(false);
-  const handleOpen = (id,n) => {
-      setCid(id);
-      setName(n);
-      console.log(id);
-      
+  const handleOpen = (id, n) => {
+    setCid(id);
+    setName(n);
+    console.log(id);
+
     setOpen(true);
   };
-  const handleClose = () => setOpen(false);
+    const handleClose = () => {
+        setName("");
+        setOpen(false)
+    };
 
   const handleUpdate = async () => {
     if (!name) {
@@ -92,8 +95,7 @@ const CreateCategory = () => {
     }
   };
   useEffect(() => {
-      getCategories();
-      
+    getCategories();
   }, []);
 
   const handleCreate = async () => {
@@ -146,7 +148,7 @@ const CreateCategory = () => {
           >
             <TextField
               onChange={(e) => setName(e.target.value)}
-            //   value={name}
+              //   value={name}
               className="category-inp"
               style={{ width: "50%", marginTop: "5rem" }}
               id="outlined-basic"
@@ -186,7 +188,7 @@ const CreateCategory = () => {
                 }}
               />
             </div>
-            <div style={{ width: "70%", marginBottom:"5rem"}}>
+            <div style={{ width: "70%", marginBottom: "5rem" }}>
               <div style={{ textAlign: "center", marginBottom: "1rem" }}>
                 All Categories
               </div>
@@ -202,13 +204,16 @@ const CreateCategory = () => {
                   return (
                     <>
                       <div
-                        onClick={()=>handleOpen(item._id,item.name)}
+                        className="create-category-hvr"
+                        onClick={() => handleOpen(item._id, item.name)}
                         style={{
                           padding: "1rem 2rem",
                           minWidth: "5rem",
                           margin: "1rem",
                           border: "1px solid rgb(195, 194, 194)",
                           borderRadius: "5px",
+                          cursor: "pointer",
+                          //   backgroundColor:"white"
                         }}
                       >
                         {item.name}

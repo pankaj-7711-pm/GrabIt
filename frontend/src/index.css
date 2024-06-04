@@ -39,6 +39,11 @@ body{
     margin-top: 1rem !important;
   }
 
+  .create-category-hvr:hover{
+    background-color: #424874;
+    color: white;
+  }
+
 @media (max-width: 1417px)  {
   .seller-dash-img{
     display: flex !important;
@@ -75,5 +80,8 @@ body{
   }
   .category-inp{
     width: 80% !important;
+  }
+  .pics-div-create-product{
+    width: 100% !important;
   }
 }

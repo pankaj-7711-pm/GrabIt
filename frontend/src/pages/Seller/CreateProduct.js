@@ -7,9 +7,67 @@ import { FormControlLabel, MenuItem, Switch } from "@mui/material";
 import axios from "axios";
 import { ConState } from "../../context/ConProvider";
 import { Select } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
+
+
+
+
 const CreateProduct = () => {
+  const [name, setName] = useState();
+  const [price, setPrice] = useState();
+  const [description, setDescription] = useState();
+  const [pics, setPics] = useState([]);
+  const [available, setAvailable] = useState(true);
+  const [inoffer, setInoffer] = useState(false);
+  const [offerPrice, setOfferPrice] = useState();
+  const [category, setCategory] = useState();
+
+
+
+  const toast = useToast();
+
   const { user } = ConState();
   const [categories, setCategories] = useState([]);
+  const [picLoading, setPicLoading] = useState(false);
+
+    const imagesUpload = (p) => {
+      setPicLoading(true);
+      if (p.type === "image/jpeg" || p.type === "image/png") {
+        const data = new FormData();
+        data.append("file", p);
+        data.append("upload_preset", "chat-app");
+        data.append("cloud_name", "duon0scym");
+        fetch("https://api.cloudinary.com/v1_1/duon0scym/image/upload", {
+          method: "post",
+          body: data,
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            setPics([...pics, data.url.toString()]);
+            console.log(data.url.toString());
+            setPicLoading(false);
+          })
+          .catch((err) => {
+            console.log(err);
+            setPicLoading(false);
+          });
+      } else {
+        toast({
+          title: "Please Select an Image!",
+          status: "warning",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        });
+        setPicLoading(false);
+        return;
+      }
+    };
+
+
+  useEffect(() => {
+    console.log(pics);
+  },[pics])
   
   const getCategories = async () => {
     try {
@@ -41,7 +99,6 @@ const CreateProduct = () => {
           className="main-div-create-product"
           style={{
             minHeight: "80vh",
-            // backgroundColor: "white",
             padding: "3rem",
             width: "80%",
           }}
@@ -63,15 +120,17 @@ const CreateProduct = () => {
                 label="Name"
                 variant="outlined"
                 required
+                onChange={(e) => setName(e.target.value)}
               />
               <Textarea
                 className="create-product-input"
                 style={{
                   height: "40vh",
                   width: "60%",
+                  border: "1px solid rgb(195, 194, 194)",
                 }}
-                // onChange={(e) => setDiscription(e.target.value)}
-                // value={discription}
+                onChange={(e) => setDescription(e.target.value)}
+                value={description}
                 placeholder="Write detailed description about your Product in more than 200 characters"
               />
               <div
@@ -88,17 +147,8 @@ const CreateProduct = () => {
                   label="Price"
                   variant="outlined"
                   required
+                  onChange={(e) => setPrice(e.target.value)}
                 />
-                {/* <div style={{ width: "49%" }}>
-                  <Select
-                    style={{ height: "3.6rem" }}
-                    placeholder="Select Category"
-                  >
-                    {categories?.map((item) => {
-                      return <option value={item._id}>{item.name}</option>;
-                    })}
-                  </Select>
-                </div> */}
                 <TextField
                   style={{ width: "49%" }}
                   id="outlined-select-currency-native"
@@ -109,29 +159,69 @@ const CreateProduct = () => {
                     native: true,
                   }}
                   helperText="Select Category"
+                  onChange={(e) => setCategory(e.target.value)}
                 >
                   {categories.map((option) => (
-                    <option  value={option._id}>
-                      {option.name}
-                    </option>
+                    <option value={option._id}>{option.name}</option>
                   ))}
                 </TextField>
               </div>
 
               <label
-                className="btn btn-outline-secondary create-product-input"
-                style={{ width: "60%" }}
+                className="btn btn-outline-secondary pics-div-create-product"
+                style={{
+                  width: "60%",
+                  marginTop: "1rem",
+                  // border: "1px solid rgb(195, 194, 194)",
+                }}
               >
-                {"Upload Images"}
-
-                <input
-                  type="file"
-                  name="photo"
-                  accept="image/*"
-                  //   onChange={(e) => setPhoto(e.target.files[0])}
-                  hidden
-                />
+                {picLoading ? (
+                  <>Loading...</>
+                ) : (
+                  <>
+                    Upload images{" "}
+                    <input
+                      type="file"
+                      name="photo"
+                      accept="image/*"
+                      onChange={(e) => imagesUpload(e.target.files[0])}
+                      hidden
+                    />
+                  </>
+                )}
               </label>
+              {pics.length !== 0 && (
+                <div
+                  className="pics-div-create-product"
+                  style={{
+                    width: "60%",
+                    backgroundColor: "white",
+                    display: "flex",
+                    flexWrap: "wrap",
+                    marginTop: "1rem",
+                    padding: "1rem",
+                    // justifyContent: "space-evenly",
+                    borderRadius: "7px",
+                    border: "1px solid black",
+                  }}
+                >
+                  {pics?.map((pic, ind) => {
+                    return (
+                      <img
+                        style={{
+                          height: "6rem",
+                          width: "6rem",
+                          margin: "1rem 0.5rem",
+                          borderRadius: "5px",
+                        }}
+                        src={pic}
+                        alt=""
+                      />
+                    );
+                  })}
+                </div>
+              )}
+
               <div
                 className="create-product-input"
                 style={{
