@@ -8,6 +8,7 @@ import axios from "axios";
 import { ConState } from "../../context/ConProvider";
 import { Select } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -25,10 +26,24 @@ const CreateProduct = () => {
 
 
   const toast = useToast();
-
+  const navigate = useNavigate();
   const { user } = ConState();
   const [categories, setCategories] = useState([]);
   const [picLoading, setPicLoading] = useState(false);
+
+
+  
+  const handleAvailableChange = (event) => {
+    setAvailable(event.target.checked);
+  };
+
+  const handleInOfferChange = (event) => {
+    setInoffer(event.target.checked);
+  };
+
+  useEffect(() => {
+    console.log("After state update:", available);
+  }, [available]);
 
     const imagesUpload = (p) => {
       setPicLoading(true);
@@ -57,7 +72,7 @@ const CreateProduct = () => {
           status: "warning",
           duration: 5000,
           isClosable: true,
-          position: "bottom",
+          position: "top",
         });
         setPicLoading(false);
         return;
@@ -67,7 +82,10 @@ const CreateProduct = () => {
 
   useEffect(() => {
     console.log(pics);
-  },[pics])
+  }, [pics])
+  
+
+
   
   const getCategories = async () => {
     try {
@@ -84,6 +102,61 @@ const CreateProduct = () => {
   useEffect(() => {
     getCategories();
   }, []);
+
+
+
+  const handleSubmit = async () => {
+    if (!name || !price || !category || (inoffer === true && !offerPrice)) {
+      toast({
+        title: "Please fill all the fields",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+      return;
+    }
+    if (description.length < 200) {
+      toast({
+        title: "Product description should be of atleast 200 characters",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+    }
+    try {
+      const { data } = await axios.post("/api/v1/product/create-product", {
+        name,
+        price,
+        description,
+        pics,
+        available,
+        inoffer,
+        offerPrice,
+        category
+      });
+      if (data?.success) {
+        toast({
+          title: "Product created successfully",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+        });
+        navigate("/dashboard/seller")
+      }
+    } catch (error) {
+      toast({
+        title: "Something wrong occured",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+    }
+  }
+
 
 
   return (
@@ -232,29 +305,56 @@ const CreateProduct = () => {
                 }}
               >
                 <FormControlLabel
-                  //   required
-                  control={<Switch defaultChecked />}
+                  control={
+                    <Switch
+                      checked={available}
+                      onChange={handleAvailableChange}
+                      // name="gilad"
+                    />
+                  }
                   label="Available"
                 />
                 <FormControlLabel
                   className="inoffer-input"
-                  //   required
-                  control={<Switch />}
+                  control={
+                    <Switch
+                      checked={inoffer}
+                      onChange={handleInOfferChange}
+                      // name="gilad"
+                    />
+                  }
                   label="Offer"
                   style={{ marginLeft: "auto" }}
                 />
-                <TextField
-                  className="inoffer-div"
-                  style={{ width: "48%" }}
-                  id="outlined-basic"
-                  label="Offer Price"
-                  variant="outlined"
-                />
+                {inoffer === true ? (
+                  <>
+                    <TextField
+                      className="inoffer-div"
+                      style={{ width: "49%" }}
+                      id="outlined-basic"
+                      label="Offer Price"
+                      variant="outlined"
+                      onChange={(e) => setOfferPrice(e.target.value)}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <TextField
+                      className="inoffer-div"
+                      disabled
+                      style={{ width: "49%" }}
+                      id="outlined-basic"
+                      label="Offer Price"
+                      variant="outlined"
+                    />
+                  </>
+                )}
               </div>
               <Button
                 className="create-product-input"
                 variant="contained"
                 style={{ width: "60%" }}
+                onClick={handleSubmit}
               >
                 Submit
               </Button>
