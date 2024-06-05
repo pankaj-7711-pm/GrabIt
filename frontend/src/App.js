@@ -9,6 +9,7 @@ import SellerRoute from './components/Routes/SellerRoute';
 import SellerDashboard from './pages/Seller/SellerDashboard';
 import CreateProduct from './pages/Seller/CreateProduct';
 import CreateCategory from './pages/Seller/CreateCategory';
+import AboutUs from './pages/AboutUs';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/about" element={<AboutUs />} />
         <Route path="/dashboard" element={<UserRoute />}>
           <Route path="user" element={<UserDashboard />} />
         </Route>
