@@ -33,6 +33,10 @@ const SellerDashboard = () => {
     arrows: false,
   };
 
+  
+
+
+
   const getAllProducts = async () => {
     try {
       const { data } = await axios.get(
@@ -47,6 +51,46 @@ const SellerDashboard = () => {
   useEffect(() => {
     getAllProducts();
   }, []);
+
+  const handleDelete = async (pid) => {
+    try {
+      const { data } = await axios.delete(
+        `/api/v1/product/delete-product/${pid}`
+      );
+      if (data?.success) {
+        toast({
+          title: "Product Deleted successfully",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+        });
+        getAllProducts();
+      } else {
+        toast({
+          title: "Error in deleting product",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Something Went wrong",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+    }
+  };
+
+  const confirmDelete = (p) => {
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      handleDelete(p);
+    }
+  };
 
   return (
     <Layout>
@@ -118,6 +162,7 @@ const SellerDashboard = () => {
                 <Button
                   variant="contained"
                   style={{ backgroundColor: "#424874" }}
+                  onClick={() => navigate("/dashboard/update-profile")}
                 >
                   Update Profile
                 </Button>
@@ -168,7 +213,7 @@ const SellerDashboard = () => {
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "center",
-              alignItems: "center",
+              // alignItems: "center",
             }}
           >
             {products?.map((product) => {
@@ -189,10 +234,12 @@ const SellerDashboard = () => {
                       </div>
                     ))}
                   </Slider>
-                  <div className="card-body mt-2 pb-0">
+                  <div className="card-body d-flex flex-column mt-2 pb-0">
                     <div style={{ display: "flex" }}>
                       <h5 className="card-title">{product.name}</h5>
-                      <p style={{ marginLeft: "auto" }}>Rs {product.price}</p>
+                      <p style={{ marginLeft: "auto", minWidth: "3rem" }}>
+                        Rs {product.price}
+                      </p>
                     </div>
 
                     <div className="d-flex ">
@@ -212,12 +259,53 @@ const SellerDashboard = () => {
                         ? `${product.description.slice(0, 20)}...`
                         : product.description}
                     </p>
-                    <p className="mt-2" style={{ color: "green", margin: "0" }}>
-                      Available
-                    </p>
-                    <div className="mt-2" style={{ display: "flex" }}>
-                      <p style={{ color: "#424874" }}>UPDATE</p>
-                      <p style={{ color: "red", marginLeft: "auto" }}>DELETE</p>
+                    {product.available === true ? (
+                      <p
+                        className="mt-2"
+                        style={{
+                          color: "green",
+                          margin: "0",
+                          marginBottom: "1rem",
+                        }}
+                      >
+                        Available
+                      </p>
+                    ) : (
+                      <>
+                        <p
+                          className="mt-2"
+                          style={{
+                            color: "gray",
+                            margin: "0",
+                            marginBottom: "1rem",
+                          }}
+                        >
+                          Not Available
+                        </p>
+                      </>
+                    )}
+                    <div
+                      className="main-div"
+                      style={{ display: "flex", marginTop: "auto" }}
+                    >
+                      <p
+                        style={{ color: "#424874", cursor: "pointer" }}
+                        onClick={() =>
+                          navigate(`/dashboard/update-product/${product._id}`)
+                        }
+                      >
+                        UPDATE
+                      </p>
+                      <p
+                        style={{
+                          color: "red",
+                          marginLeft: "auto",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => confirmDelete(product._id)}
+                      >
+                        DELETE
+                      </p>
                     </div>
                   </div>
                 </div>

@@ -62,7 +62,7 @@ export const getAllProductOfSellerController = async (req, res) => {
 export const getSingleProductController = async (req, res) => {
   try {
     const { pid } = req.params;
-    const product = await productModel.findOne({ _id: pid }).populate("shop");
+    const product = await productModel.findOne({ _id: pid }).populate("shop").populate("category");
     res.status(200).send({
       success: true,
       message: "Product Fetched",

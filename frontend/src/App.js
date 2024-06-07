@@ -10,6 +10,8 @@ import SellerDashboard from './pages/Seller/SellerDashboard';
 import CreateProduct from './pages/Seller/CreateProduct';
 import CreateCategory from './pages/Seller/CreateCategory';
 import AboutUs from './pages/AboutUs';
+import UpdateProduct from './pages/Seller/UpdateProduct';
+import UpdateProfileSeller from './pages/Seller/UpdateProfileSeller';
 
 function App() {
   return (
@@ -26,6 +28,9 @@ function App() {
           <Route path="seller" element={<SellerDashboard />} />
           <Route path="create-product" element={<CreateProduct />} />
           <Route path="create-category" element={<CreateCategory />} />
+
+          <Route path="update-product/:pid" element={<UpdateProduct />} />
+          <Route path="update-profile" element={<UpdateProfileSeller />} />
         </Route>
       </Routes>
     </>
