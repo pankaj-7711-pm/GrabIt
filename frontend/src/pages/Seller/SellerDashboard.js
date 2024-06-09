@@ -276,6 +276,7 @@ const SellerDashboard = () => {
                       backgroundColor: "#424874",
                       minWidth: "10rem",
                     }}
+                    onClick={()=>navigate("/dashboard/messages-seller")}
                   >
                     Messages
                   </Button>
