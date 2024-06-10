@@ -53,7 +53,7 @@ const Header = () => {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span className="navbar-toggler-icon" />
+            <span className="navbar-toggler-icon" style={{color:"black"}} />
           </button>
           <div
             className="collapse navbar-collapse navbar-main-div"

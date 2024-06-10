@@ -29,7 +29,7 @@ function App() {
           <Route path="seller" element={<SellerDashboard />} />
           <Route path="create-product" element={<CreateProduct />} />
           <Route path="create-category" element={<CreateCategory />} />
-          <Route path="messages-seller" element={<Messages />} />
+          {/* <Route path="messages-seller" element={<Messages />} /> */}
           <Route path="update-product/:pid" element={<UpdateProduct />} />
           <Route path="update-profile" element={<UpdateProfileSeller />} />
         </Route>

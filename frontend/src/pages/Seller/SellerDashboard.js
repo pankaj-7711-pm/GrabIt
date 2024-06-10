@@ -15,7 +15,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import { Accordion, AccordionDetails, AccordionSummary, Avatar, Button } from "@mui/material";
-
+import Pagination from "@mui/material/Pagination";
+import { styled } from "@mui/material/styles";
 
 
 
@@ -123,7 +124,7 @@ const SellerDashboard = () => {
                     <Avatar
                       alt="Remy Sharp"
                       src={user?.user.pic}
-                      sx={{ width: 156, height: 156 }}
+                      sx={{ width: 200, height: 200 }}
                     />
                     <div>
                       <h3 style={{ textAlign: "center", marginTop: "6px" }}>
@@ -149,14 +150,16 @@ const SellerDashboard = () => {
 
                   <div
                     className="seller-dash-details col p-0 m-0 col-lg-7 col-md-12"
-                    style={{
-                      // height: "19rem",
-                      // width: "60%",
-                      // borderRadius: "5px",
-                      // border: "1px solid rgb(195, 194, 194)",
-                      // padding: "1rem 2rem",
-                      // marginBottom:"2rem"
-                    }}
+                    style={
+                      {
+                        // height: "19rem",
+                        // width: "60%",
+                        // borderRadius: "5px",
+                        // border: "1px solid rgb(195, 194, 194)",
+                        // padding: "1rem 2rem",
+                        // marginBottom:"2rem"
+                      }
+                    }
                   >
                     <Slider {...settings}>
                       {user?.user.pics.map((image, index) => (
@@ -165,7 +168,11 @@ const SellerDashboard = () => {
                             src={image}
                             className="card-img-top"
                             alt={`Slide ${index}`}
-                            style={{ height: "100%", objectFit: "cover", borderRadius:"5px"}}
+                            style={{
+                              height: "100%",
+                              objectFit: "cover",
+                              borderRadius: "5px",
+                            }}
                           />
                         </div>
                       ))}
@@ -276,7 +283,7 @@ const SellerDashboard = () => {
                       backgroundColor: "#424874",
                       minWidth: "10rem",
                     }}
-                    onClick={()=>navigate("/dashboard/messages-seller")}
+                    onClick={() => navigate("/dashboard/messages-seller")}
                   >
                     Messages
                   </Button>
@@ -412,6 +419,15 @@ const SellerDashboard = () => {
                     </div>
                   );
                 })}
+              </div>
+              <div style={{ display: "flex" }}>
+                <Pagination
+                  style={{ marginLeft: "auto" }}
+                  count={Math.ceil(products?.length/6)}
+                  variant="outlined"
+                  shape="rounded"
+                  className="custom-pagination"
+                />
               </div>
             </div>
           </div>
