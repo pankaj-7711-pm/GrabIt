@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const ConContext = createContext();
 
@@ -12,15 +13,36 @@ const ConProvider = ({ children }) => {
   //default axios
   axios.defaults.headers.common["Authorization"] = user?.token;
 
+  // useEffect(() => {
+  //   const data = localStorage.getItem("userInform");
+  //   if (data) {
+  //     const parseData = JSON.parse(data);
+  //     setUser({
+  //       ...user,
+  //       user: parseData.user,
+  //       token: parseData.token,
+  //     });
+  //   }
+
+  //   // eslint-disable-next-line
+  // }, []);
+
   useEffect(() => {
     const data = localStorage.getItem("userInform");
     if (data) {
       const parseData = JSON.parse(data);
-      setUser({
-        ...user,
-        user: parseData.user,
-        token: parseData.token,
-      });
+      const decodedToken = jwtDecode(parseData.token);
+
+      const currentTime = Date.now() / 1000; // in seconds
+      if (decodedToken.exp < currentTime) {
+        localStorage.removeItem("userInform");
+      } else {
+        setUser({
+          ...user,
+          user: parseData.user,
+          token: parseData.token,
+        });
+      }
     }
 
     // eslint-disable-next-line

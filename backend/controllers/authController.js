@@ -263,3 +263,64 @@ export const sendOtpController = async (req, res) => {
     console.log(error);
   }
 };
+
+export const updateSellerController = async (req, res) => {
+  try {
+    const {
+      name,
+      owner,
+      address,
+      pincode,
+      discription,
+      phone,
+      city,
+      state,
+      email,
+      password,
+      pic,
+      pics,
+      isSeller,
+    } = req.body;
+
+    //validation
+    if (
+      !name ||
+      !owner ||
+      !address ||
+      !pincode ||
+      !phone ||
+      !city ||
+      !state ||
+      !email ||
+      !password ||
+      !discription || !pics || !pic
+    ) {
+      return res.send({ message: "All fields are required" });
+    }
+
+
+    //Update user 
+    const hashedPassword = await hashPassword(password);
+    const user = await sellerModel.findByIdAndUpdate(
+      req.user._id,
+      { ...req.body, password: hashedPassword },
+      { new: true }
+    );
+    // await user.save();
+
+    res.status(201).send({
+      success: true,
+      message: "Profile updated Successfully",
+      user,
+    });
+
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in updating profile",
+      error,
+    });
+  }
+}
