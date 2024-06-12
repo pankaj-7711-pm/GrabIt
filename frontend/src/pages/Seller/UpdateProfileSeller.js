@@ -9,6 +9,7 @@ import {
   FormHelperText,
   AvatarGroup,
   Avatar,
+  Select,
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +19,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Textarea } from "@chakra-ui/react";
 import Layout from "../../components/layout/Layout";
 import { ConState } from "../../context/ConProvider";
+import { ShopTypes } from "../ShopType";
 
 const MotionBox = motion(Box);
 // import { ConState } from "../../context/ConProvider";
@@ -59,6 +61,7 @@ const UpdateProfileSeller = () => {
     setEmail(user?.user?.email);
     setPic(user?.user?.pic);
     setPics(user?.user?.pics);
+    setType(user?.user?.type)
   },[])
 
   const handleNext = () => {
@@ -167,7 +170,7 @@ const UpdateProfileSeller = () => {
       !state ||
       !email ||
       !phone ||
-      !pics.length || !password || !confirmpassword
+      !pics.length || !password || !confirmpassword || !type
     ) {
       toast({
         title: "Please Fill all the Feilds",
@@ -258,11 +261,12 @@ const UpdateProfileSeller = () => {
   
 
   const pages = [
-    <div>
+    <div className="abab">
       <FormControl id="email" isRequired>
         <FormLabel>Email</FormLabel>
         <Input
           style={{ width: "20rem" }}
+          className="update-seller-email"
           placeholder="Enter your Email"
           value={email}
           isDisabled
@@ -295,7 +299,7 @@ const UpdateProfileSeller = () => {
           placeholder="Enter Shop name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="mb-2"
+          className="mb-2 update-seller-email"
           style={{ width: "20rem" }}
         />
       </FormControl>
@@ -308,15 +312,23 @@ const UpdateProfileSeller = () => {
           className="mb-2"
         />
       </FormControl>
-      {/* <FormControl id="shop-type" isRequired>
+      <FormControl id="shop-type" isRequired>
         <FormLabel>Shop type</FormLabel>
-        <Input
+        <Select
           value={type}
-          placeholder="Enter Shop type eg: cloths"
           onChange={(e) => setType(e.target.value)}
           className="mb-2"
-        />
-      </FormControl> */}
+        >
+          <option value="" disabled>
+            Select Shop type
+          </option>
+          {ShopTypes.map((shopType, index) => (
+            <option key={index} value={shopType}>
+              {shopType}
+            </option>
+          ))}
+        </Select>
+      </FormControl>
       <Button
         colorScheme="blue"
         width={"49%"}
@@ -341,8 +353,9 @@ const UpdateProfileSeller = () => {
           value={address}
           placeholder="Enter Address"
           onChange={(e) => SetAddress(e.target.value)}
-          className="mb-2"
+          className="mb-2 update-seller-email"
           style={{ width: "20rem" }}
+          // className="update-seller-email"
         />
       </FormControl>
       <FormControl id="pincode" isRequired>
@@ -468,7 +481,7 @@ const UpdateProfileSeller = () => {
             type={show ? "text" : "password"}
             placeholder="Enter your Password"
             onChange={(e) => setPassword(e.target.value)}
-            className="mb-2"
+            className="mb-2 update-seller-email"
             style={{ width: "20rem" }}
           />
           <InputRightElement width={"4.5rem"}>
@@ -528,6 +541,7 @@ const UpdateProfileSeller = () => {
         }}
       >
         <div
+          className="update-seller-pages-main"
           style={{
             padding: "5rem 5rem",
             backgroundColor: "white",
@@ -535,7 +549,7 @@ const UpdateProfileSeller = () => {
             margin:"1rem 2rem"
           }}
         >
-          <h2 style={{marginBottom:"1rem"}}>Update Profile</h2>
+          <h2 className="update-seller-text" style={{marginBottom:"1rem"}}>Update Profile</h2>
           {pages[page]}
         </div>
       </div>

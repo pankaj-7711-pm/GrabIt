@@ -251,35 +251,50 @@ const SellerDashboard = () => {
                 className="row "
                 style={{ padding: "0 15%", marginTop: "1rem" }}
               >
-                <div style={{ margin: "0", padding: "0" }}>
+                <div
+                  className="button-group-seller-dashboard"
+                  style={{ margin: "0", padding: "0" }}
+                >
                   <Button
+                    className="seller-dashboard-btn"
                     variant="contained"
-                    style={{ backgroundColor: "#424874" }}
+                    style={{ backgroundColor: "#424874", marginBottom: "3px" }}
                     onClick={() => navigate("/dashboard/update-profile")}
                   >
                     Update Profile
                   </Button>
                   <Button
                     variant="contained"
-                    className="seller-dash-btn"
-                    style={{ marginLeft: "3px", backgroundColor: "#424874" }}
+                    className="seller-dashboard-btn"
+                    // className="mb-2"
+                    style={{
+                      backgroundColor: "#424874",
+                      marginLeft: "3px",
+                      marginBottom: "3px",
+                    }}
                     onClick={() => navigate("/dashboard/create-product")}
                   >
                     Create Product
                   </Button>
                   <Button
                     variant="contained"
-                    className="seller-dash-btn"
-                    style={{ marginLeft: "3px", backgroundColor: "#424874" }}
+                    className="seller-dashboard-btn"
+                    // className="mb-2"
+                    style={{
+                      backgroundColor: "#424874",
+                      marginLeft: "3px",
+                      marginBottom: "3px",
+                    }}
                     onClick={() => navigate("/dashboard/create-category")}
                   >
                     Create Category
                   </Button>
                   <Button
                     variant="contained"
-                    className="seller-dash-btn"
+                    className="seller-dashboard-btn"
                     style={{
                       marginLeft: "3px",
+                      marginBottom: "3px",
                       backgroundColor: "#424874",
                       minWidth: "10rem",
                     }}
@@ -308,10 +323,18 @@ const SellerDashboard = () => {
                   }}
                 />
               </div>
-              <div>
-                <h2 style={{ textAlign: "center" }}>Products</h2>
-              </div>
+              {products?.length !== 0 ? (
+                <div>
+                  <h2 style={{ textAlign: "center" }}>Products</h2>
+                </div>
+              ) : (
+                <div style={{height:"20vh", display:"flex", justifyContent:"center", alignItems:"center"}}>
+                  <p style={{ textAlign: "center" }}>No Products to Show</p>
+                </div>
+              )}
+
               <div
+                className="seller-dash-products-div"
                 style={{
                   display: "flex",
                   flexWrap: "wrap",
@@ -420,15 +443,17 @@ const SellerDashboard = () => {
                   );
                 })}
               </div>
-              <div style={{ display: "flex" }}>
-                <Pagination
-                  style={{ marginLeft: "auto" }}
-                  count={Math.ceil(products?.length/6)}
-                  variant="outlined"
-                  shape="rounded"
-                  className="custom-pagination"
-                />
-              </div>
+              {products?.length !== 0 && (
+                <div style={{ display: "flex" }}>
+                  <Pagination
+                    style={{ marginLeft: "auto" }}
+                    count={Math.ceil(products?.length / 6)}
+                    variant="outlined"
+                    shape="rounded"
+                    className="custom-pagination"
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>

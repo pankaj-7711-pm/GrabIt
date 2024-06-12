@@ -84,6 +84,35 @@ const CreateCategory = () => {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      if (window.confirm("Deleting this category will also delete its corresponding products. Are you sure you want to delete this category?")) {
+        const { data } = await axios.delete(
+          `/api/v1/category/delete-category/${cid}`
+        );
+        if (data?.success) {
+          toast({
+            title: data.message,
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+            position: "top",
+          });
+          getCategories();
+          handleClose();
+        }
+      }
+    } catch (error) {
+      toast({
+        title: "Error in deleting category",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+    }
+  }
+
   const getCategories = async () => {
     try {
       const { data } = await axios.get(
@@ -189,9 +218,20 @@ const CreateCategory = () => {
               />
             </div>
             <div style={{ width: "70%", marginBottom: "5rem" }}>
-              <div style={{ textAlign: "center", marginBottom: "1rem" }}>
-                All Categories
-              </div>
+              {categories?.length === 0 ? (
+                <>
+                  <div style={{ textAlign: "center", marginBottom: "1rem" }}>
+                    No Categories to display
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div style={{ textAlign: "center", marginBottom: "1rem" }}>
+                    All Categories
+                  </div>
+                </>
+              )}
+
               <div
                 style={{
                   display: "flex",
@@ -257,6 +297,7 @@ const CreateCategory = () => {
                       color: "white",
                       marginTop: "10px",
                     }}
+                    onClick={()=>handleDelete()}
                   >
                     Delete
                   </Button>

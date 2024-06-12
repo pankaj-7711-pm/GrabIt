@@ -234,6 +234,9 @@ const CreateProduct = () => {
                   helperText="Select Category"
                   onChange={(e) => setCategory(e.target.value)}
                 >
+                  {categories?.length === 0 && (
+                    <option value="" disabled >No categories</option>
+                  )}
                   {categories.map((option) => (
                     <option value={option._id}>{option.name}</option>
                   ))}

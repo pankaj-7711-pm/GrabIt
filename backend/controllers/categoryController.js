@@ -75,3 +75,22 @@ export const getCategoryController = async (req, res) => {
         });
     }
 }
+
+export const deleteCategoryController = async (req, res) => {
+  try {
+    await categoryModel.findByIdAndDelete(req.params.cid);
+    const result = await productModel.deleteMany({
+      category: req.params.cid,
+    });
+    res.status(200).send({
+      success: true,
+      message: "Category and its products Deleted Successfully",
+    });
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "Error in deleting Categories",
+      error,
+    });
+  }
+}

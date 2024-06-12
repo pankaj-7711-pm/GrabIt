@@ -9,6 +9,7 @@ import {
   FormHelperText,
   AvatarGroup,
   Avatar,
+  Select,
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +18,7 @@ import OtpModal from "./OtpModal";
 import { Box } from "@chakra-ui/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Textarea } from "@chakra-ui/react";
+import { ShopTypes } from "../ShopType";
 
 const MotionBox = motion(Box);
 // import { ConState } from "../../context/ConProvider";
@@ -370,12 +372,20 @@ const CustomerRegister = () => {
       </FormControl>
       <FormControl id="shop-type" isRequired>
         <FormLabel>Shop type</FormLabel>
-        <Input
+        <Select
           value={type}
-          placeholder="Enter Shop type eg: cloths"
           onChange={(e) => setType(e.target.value)}
           className="mb-2"
-        />
+        >
+          <option value="" disabled>
+            Select Shop type
+          </option>
+          {ShopTypes.map((shopType, index) => (
+            <option key={index} value={shopType}>
+              {shopType}
+            </option>
+          ))}
+        </Select>
       </FormControl>
       <Button
         colorScheme="blue"

@@ -99,3 +99,37 @@ body{
     width: 100% !important;
   }
 }
+
+@media (max-width: 508px){
+  .update-seller-email{
+    width: 100% !important;
+  }
+
+  .update-seller-text{
+    font-size: large;
+  }
+
+  .update-seller-pages-main{
+    padding: 10% !important;
+  }
+}
+
+@media (max-width: 1300px){
+  .button-group-seller-dashboard{
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: space-around !important;
+    margin: 0 !important;
+  }
+
+  .seller-dashboard-btn{
+    margin: 0 0 3px 0 !important;
+    width: 15rem !important;
+  }
+}
+
+@media (max-width:800px) {
+  .seller-dash-products-div{
+    justify-content: center;
+  }
+}

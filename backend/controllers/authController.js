@@ -280,6 +280,7 @@ export const updateSellerController = async (req, res) => {
       pic,
       pics,
       isSeller,
+      type
     } = req.body;
 
     //validation
@@ -293,7 +294,7 @@ export const updateSellerController = async (req, res) => {
       !state ||
       !email ||
       !password ||
-      !discription || !pics || !pic
+      !discription || !pics || !pic || !type
     ) {
       return res.send({ message: "All fields are required" });
     }
