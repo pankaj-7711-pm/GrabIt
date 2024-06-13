@@ -9,6 +9,8 @@ import { ConState } from "../../context/ConProvider";
 import { Select } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
+import { IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 const UpdateProduct = () => {
   const [name, setName] = useState();
@@ -27,6 +29,13 @@ const UpdateProduct = () => {
   const [picLoading, setPicLoading] = useState(false);
 
   const params = useParams();
+
+
+  const removeImage = (index) => {
+    const updatedPics = pics.filter((_, i) => i !== index);
+    setPics(updatedPics);
+  };
+
   //get single product
   const getSingleProduct = async () => {
     try {
@@ -120,6 +129,16 @@ const UpdateProduct = () => {
     if (!name || !price || !category || (inoffer === true && !offerPrice)) {
       toast({
         title: "Please fill all the fields",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+      return;
+    }
+    if (pics.length < 2) {
+      toast({
+        title: "There should be atleast two images",
         status: "warning",
         duration: 5000,
         isClosable: true,
@@ -251,6 +270,14 @@ const UpdateProduct = () => {
                   helperText="Select Category"
                   onChange={(e) => setCategory(e.target.value)}
                 >
+                  <option value="" disabled selected hidden>
+                    Category
+                  </option>
+                  {categories?.length === 0 && (
+                    <option value="" disabled>
+                      No categories
+                    </option>
+                  )}
                   {categories.map((option) => (
                     <option value={option._id}>{option.name}</option>
                   ))}
@@ -280,7 +307,7 @@ const UpdateProduct = () => {
                   </>
                 )}
               </label>
-              {pics.length !== 0 && (
+              {pics.length !== 0 ? (
                 <div
                   className="pics-div-create-product"
                   style={{
@@ -290,26 +317,50 @@ const UpdateProduct = () => {
                     flexWrap: "wrap",
                     marginTop: "1rem",
                     padding: "1rem",
-                    // justifyContent: "space-evenly",
                     borderRadius: "7px",
                     border: "1px solid black",
+                    position: "relative",
                   }}
                 >
-                  {pics?.map((pic, ind) => {
-                    return (
+                  {pics?.map((pic, ind) => (
+                    <div
+                      key={ind}
+                      style={{
+                        position: "relative",
+                        margin: "1rem 0.5rem",
+                      }}
+                    >
+                      <IconButton
+                        style={{
+                          position: "absolute",
+                          top: "-10px",
+                          right: "-10px",
+                          backgroundColor: "white",
+                          borderRadius: "50%",
+                          padding: "2px",
+                          zIndex: 1,
+                        }}
+                        onClick={() => removeImage(ind)}
+                      >
+                        <CloseIcon fontSize="small" />
+                      </IconButton>
                       <img
                         style={{
                           height: "6rem",
                           width: "6rem",
-                          margin: "1rem 0.5rem",
                           borderRadius: "5px",
+                          display: "block",
                         }}
                         src={pic}
                         alt=""
                       />
-                    );
-                  })}
+                    </div>
+                  ))}
                 </div>
+              ) : (
+                <>
+                  <div>No images selected</div>
+                </>
               )}
 
               <div
@@ -373,7 +424,6 @@ const UpdateProduct = () => {
               </div>
               <Button
                 className="create-product-input"
-                
                 variant="contained"
                 style={{ width: "60%" }}
                 onClick={handleSubmit}

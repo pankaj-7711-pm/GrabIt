@@ -51,7 +51,7 @@ const CreateCategory = () => {
         status: "warning",
         duration: 5000,
         isClosable: true,
-        position: "bottom",
+        position: "top",
       });
       return;
     }
@@ -134,7 +134,7 @@ const CreateCategory = () => {
         status: "warning",
         duration: 5000,
         isClosable: true,
-        position: "bottom",
+        position: "top",
       });
       return;
     }

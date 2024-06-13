@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../components/layout/Layout";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -9,8 +9,8 @@ import { ConState } from "../../context/ConProvider";
 import { Select } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-
-
+import { IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 
 const CreateProduct = () => {
@@ -23,16 +23,12 @@ const CreateProduct = () => {
   const [offerPrice, setOfferPrice] = useState();
   const [category, setCategory] = useState();
 
-
-
   const toast = useToast();
   const navigate = useNavigate();
   const { user } = ConState();
   const [categories, setCategories] = useState([]);
   const [picLoading, setPicLoading] = useState(false);
 
-
-  
   const handleAvailableChange = (event) => {
     setAvailable(event.target.checked);
   };
@@ -41,52 +37,53 @@ const CreateProduct = () => {
     setInoffer(event.target.checked);
   };
 
+  const removeImage = (index) => {
+    const updatedPics = pics.filter((_, i) => i !== index);
+    setPics(updatedPics);
+  };
+
   useEffect(() => {
     console.log("After state update:", available);
   }, [available]);
 
-    const imagesUpload = (p) => {
-      setPicLoading(true);
-      if (p.type === "image/jpeg" || p.type === "image/png") {
-        const data = new FormData();
-        data.append("file", p);
-        data.append("upload_preset", "chat-app");
-        data.append("cloud_name", "duon0scym");
-        fetch("https://api.cloudinary.com/v1_1/duon0scym/image/upload", {
-          method: "post",
-          body: data,
+  const imagesUpload = (p) => {
+    setPicLoading(true);
+    if (p.type === "image/jpeg" || p.type === "image/png") {
+      const data = new FormData();
+      data.append("file", p);
+      data.append("upload_preset", "chat-app");
+      data.append("cloud_name", "duon0scym");
+      fetch("https://api.cloudinary.com/v1_1/duon0scym/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPics([...pics, data.url.toString()]);
+          console.log(data.url.toString());
+          setPicLoading(false);
         })
-          .then((res) => res.json())
-          .then((data) => {
-            setPics([...pics, data.url.toString()]);
-            console.log(data.url.toString());
-            setPicLoading(false);
-          })
-          .catch((err) => {
-            console.log(err);
-            setPicLoading(false);
-          });
-      } else {
-        toast({
-          title: "Please Select an Image!",
-          status: "warning",
-          duration: 5000,
-          isClosable: true,
-          position: "top",
+        .catch((err) => {
+          console.log(err);
+          setPicLoading(false);
         });
-        setPicLoading(false);
-        return;
-      }
-    };
-
+    } else {
+      toast({
+        title: "Please Select an Image!",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+      setPicLoading(false);
+      return;
+    }
+  };
 
   useEffect(() => {
     console.log(pics);
-  }, [pics])
-  
+  }, [pics]);
 
-
-  
   const getCategories = async () => {
     try {
       const { data } = await axios.get(
@@ -94,7 +91,6 @@ const CreateProduct = () => {
       );
       setCategories(data?.category);
       console.log(categories);
-      
     } catch (error) {
       // console.log(error);
     }
@@ -103,12 +99,20 @@ const CreateProduct = () => {
     getCategories();
   }, []);
 
-
-
   const handleSubmit = async () => {
     if (!name || !price || !category || (inoffer === true && !offerPrice)) {
       toast({
         title: "Please fill all the fields",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+      return;
+    }
+    if (pics.length < 2) {
+      toast({
+        title: "There should be atleast two images",
         status: "warning",
         duration: 5000,
         isClosable: true,
@@ -134,7 +138,7 @@ const CreateProduct = () => {
         available,
         inoffer,
         offerPrice,
-        category
+        category,
       });
       if (data?.success) {
         toast({
@@ -144,7 +148,7 @@ const CreateProduct = () => {
           isClosable: true,
           position: "top",
         });
-        navigate("/dashboard/seller")
+        navigate("/dashboard/seller");
       }
     } catch (error) {
       toast({
@@ -155,9 +159,7 @@ const CreateProduct = () => {
         position: "top",
       });
     }
-  }
-
-
+  };
 
   return (
     <Layout>
@@ -234,8 +236,13 @@ const CreateProduct = () => {
                   helperText="Select Category"
                   onChange={(e) => setCategory(e.target.value)}
                 >
+                  <option value="" disabled selected hidden>
+                    Category
+                  </option>
                   {categories?.length === 0 && (
-                    <option value="" disabled >No categories</option>
+                    <option value="" disabled>
+                      No categories
+                    </option>
                   )}
                   {categories.map((option) => (
                     <option value={option._id}>{option.name}</option>
@@ -266,7 +273,7 @@ const CreateProduct = () => {
                   </>
                 )}
               </label>
-              {pics.length !== 0 && (
+              {pics.length !== 0 ? (
                 <div
                   className="pics-div-create-product"
                   style={{
@@ -276,26 +283,50 @@ const CreateProduct = () => {
                     flexWrap: "wrap",
                     marginTop: "1rem",
                     padding: "1rem",
-                    // justifyContent: "space-evenly",
                     borderRadius: "7px",
                     border: "1px solid black",
+                    position: "relative",
                   }}
                 >
-                  {pics?.map((pic, ind) => {
-                    return (
+                  {pics?.map((pic, ind) => (
+                    <div
+                      key={ind}
+                      style={{
+                        position: "relative",
+                        margin: "1rem 0.5rem",
+                      }}
+                    >
+                      <IconButton
+                        style={{
+                          position: "absolute",
+                          top: "-10px",
+                          right: "-10px",
+                          backgroundColor: "white",
+                          borderRadius: "50%",
+                          padding: "2px",
+                          zIndex: 1,
+                        }}
+                        onClick={() => removeImage(ind)}
+                      >
+                        <CloseIcon fontSize="small" />
+                      </IconButton>
                       <img
                         style={{
                           height: "6rem",
                           width: "6rem",
-                          margin: "1rem 0.5rem",
                           borderRadius: "5px",
+                          display: "block",
                         }}
                         src={pic}
                         alt=""
                       />
-                    );
-                  })}
+                    </div>
+                  ))}
                 </div>
+              ) : (
+                <>
+                  <div>No images selected</div>
+                </>
               )}
 
               <div
