@@ -5,6 +5,7 @@ import {
   deleteProductController,
   getAllProductOfLocationController,
   getAllProductOfSellerController,
+  getAllSellersController,
   getAllSellersOfLocationController,
   getSingleProductController,
   updateProductController,
@@ -31,6 +32,9 @@ router.get("/get-product-location", getAllProductOfLocationController);
 
 // get all sellers of a particular location
 router.get("/get-sellers-location", getAllSellersOfLocationController);
+
+// get all sellers
+router.get("/get-all-sellers", getAllSellersController);
 
 //update product
 router.put(

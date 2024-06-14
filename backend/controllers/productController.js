@@ -178,3 +178,20 @@ export const deleteProductController = async (req, res) => {
     });
   }
 };
+
+export const getAllSellersController = async (req, res) => {
+  try {
+    const sellers = await sellerModel.find({}).sort("-rating").limit(5);
+    res.status(200).send({
+      success: true,
+      message: "Sellers Fetched",
+      sellers,
+    });
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "Error in getting Sellers",
+      error,
+    });
+  }
+};
