@@ -3,6 +3,8 @@ import Layout from "../components/layout/Layout";
 import axios from "axios";
 import Rating from "react-rating";
 import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
+import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
+import { ShopTypes } from "./ShopType";
 
 const divStyle = {
   backgroundImage: 'url("/landingpage.jpg")',
@@ -14,6 +16,7 @@ const divStyle = {
 
 const HomePage = () => {
   const [sellers, setSellers] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const getAllSellers = async () => {
     try {
@@ -21,19 +24,16 @@ const HomePage = () => {
       if (data?.success) {
         setSellers(data?.sellers);
       }
-    } catch (error) {
-      
-    }
-  }
+    } catch (error) {}
+  };
 
   useEffect(() => {
     getAllSellers();
-  }, [])
-  
+  }, []);
 
   return (
     <Layout title={"Welcome to GrabIt - your online store"}>
-      <div style={{backgroundColor:"#fff"}}>
+      <div style={{ backgroundColor: "#fff" }}>
         <div className="homepage-main-banner" style={divStyle}>
           <div style={{ marginTop: "5rem" }}>
             <h1 style={{ fontSize: "5rem" }}>
@@ -84,7 +84,7 @@ const HomePage = () => {
                   alignItems: "center",
                   justifyContent: "center",
                   position: "relative",
-                  marginBottom:"10rem"
+                  marginBottom: "10rem",
                 }}
               >
                 Get Started
@@ -124,7 +124,7 @@ const HomePage = () => {
                 padding: "1rem",
                 minHeight: "60vh",
                 flexWrap: "wrap",
-                marginBottom:"1rem"
+                marginBottom: "1rem",
               }}
             >
               {sellers?.map((s) => {
@@ -139,7 +139,11 @@ const HomePage = () => {
                       }}
                       alt=""
                     />
-                    <p style={{margin:"0", padding:"0", textAlign:"center"}}>{s.name }</p>
+                    <p
+                      style={{ margin: "0", padding: "0", textAlign: "center" }}
+                    >
+                      {s.name}
+                    </p>
                     <div
                       className=" "
                       style={{ display: "flex", justifyContent: "center" }}
@@ -159,6 +163,173 @@ const HomePage = () => {
                 );
               })}
             </div>
+          </div>
+        </div>
+        <div style={{ marginTop: "5rem" }}>
+          <h2 style={{ fontSize: "4rem", textAlign: "center" }}>
+            What <span style={{ color: "#A6B1E1" }}>We</span> Do
+          </h2>
+
+          <div className="row m-0 p-0">
+            <div
+              className="col-lg-6 m-0"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div>
+                <h4
+                  style={{
+                    textAlign: "center",
+                    fontSize: "2rem",
+                    fontWeight: "400",
+                    color: "#424874",
+                    margin: "1rem 0",
+                  }}
+                >
+                  CUSTOMER
+                </h4>
+                <p className="text-what-we-do">
+                  <span
+                    style={{
+                      backgroundColor: "green",
+                      color: "white",
+                      borderRadius: "100%",
+                      padding: " 0 5px",
+                    }}
+                  >
+                    <CheckRoundedIcon style={{ fontSize: "1.5rem" }} />
+                  </span>{" "}
+                  Local shops at your fingertips.
+                </p>
+                <p className="text-what-we-do">
+                  <span
+                    style={{
+                      backgroundColor: "green",
+                      color: "white",
+                      borderRadius: "100%",
+                      padding: " 0 5px",
+                    }}
+                  >
+                    <CheckRoundedIcon style={{ fontSize: "1.5rem" }} />
+                  </span>{" "}
+                  Communication with seller is easier.
+                </p>
+                <p className="text-what-we-do">
+                  <span
+                    style={{
+                      backgroundColor: "green",
+                      color: "white",
+                      borderRadius: "100%",
+                      padding: " 0 5px",
+                    }}
+                  >
+                    <CheckRoundedIcon style={{ fontSize: "1.5rem" }} />
+                  </span>{" "}
+                  Rate and Review products and sellers.
+                </p>
+              </div>
+            </div>
+            <div
+              className="col-lg-6 m-0"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div>
+                <h4
+                  style={{
+                    textAlign: "center",
+                    fontSize: "2rem",
+                    fontWeight: "400",
+                    color: "#424874",
+                    margin: "1rem 0",
+                  }}
+                >
+                  SELLER
+                </h4>
+                <p className="text-what-we-do">
+                  <span
+                    style={{
+                      backgroundColor: "green",
+                      color: "white",
+                      borderRadius: "100%",
+                      padding: " 0 5px",
+                    }}
+                  >
+                    <CheckRoundedIcon style={{ fontSize: "1.5rem" }} />
+                  </span>{" "}
+                  Make your shop reach all over the world.
+                </p>
+                <p className="text-what-we-do">
+                  <span
+                    style={{
+                      backgroundColor: "green",
+                      color: "white",
+                      borderRadius: "100%",
+                      padding: " 0 5px",
+                    }}
+                  >
+                    <CheckRoundedIcon style={{ fontSize: "1.5rem" }} />
+                  </span>{" "}
+                  Make users aware of offers at your shop.
+                </p>
+
+                <p className="text-what-we-do">
+                  <span
+                    style={{
+                      backgroundColor: "green",
+                      color: "white",
+                      borderRadius: "100%",
+                      padding: " 0 5px",
+                    }}
+                  >
+                    <CheckRoundedIcon style={{ fontSize: "1.5rem" }} />
+                  </span>{" "}
+                  Solve customers query online.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style={{ marginTop: "5rem" }}>
+          <h2
+            style={{ fontSize: "4rem", textAlign: "center" }}
+          >
+            Categories
+          </h2>
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "space-around",
+              alignItems: "space-around",
+              minHeight: "40vh",
+              marginTop: "1rem",
+            }}
+          >
+            {ShopTypes.map((t, index) => {
+              return (
+                <div
+                  className="categories-homepage"
+                  style={{
+                    minWidth: "12rem",
+                    padding: "2rem",
+                    // border: "1px solid rgb(195, 194, 194)",
+                    // borderRadius: "5px",
+                    // marginBottom:"2rem"
+                    color: "#424874",
+                    fontSize: "1.4rem",
+                  }}
+                >
+                  {t}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

@@ -41,6 +41,12 @@ body{
   
 }
 
+.categories-homepage:hover{
+  color: #A6B1E1 !important;
+  /* color: #424874 !important; */
+  cursor: pointer;
+}
+
 .aa{
   border: 1px solid rgb(195, 194, 194) !important;
 }
@@ -96,6 +102,10 @@ body{
   100% {
     transform: translateX(0);
   }
+}
+
+.text-what-we-do{
+  font-size: 1.5rem;
 }
 
 .featured-seller-text{
