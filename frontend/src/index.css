@@ -17,7 +17,7 @@ body{
   padding: 0;
   box-sizing: border-box;
   /* min-height: 100vh; */
-  background-color: #F4EEFF !important;
+  /* background-color: #F4EEFF !important; */
   /* background-color: white !important; */
 }
 
@@ -42,9 +42,12 @@ body{
 }
 
 .categories-homepage:hover{
-  color: #A6B1E1 !important;
+  /* color: #A6B1E1 !important; */
   /* color: #424874 !important; */
+  color: white !important;
+  background-color: #424874 ;
   cursor: pointer;
+  font-weight: 200 !important;
 }
 
 .aa{
@@ -105,7 +108,9 @@ body{
 }
 
 .text-what-we-do{
-  font-size: 1.5rem;
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin: 5rem 0 !important;
 }
 
 .featured-seller-text{
@@ -214,4 +219,64 @@ body{
     justify-content: center;
   }
 }
+
+@media (max-width: 1200px){
+  .what-we-do-inner{
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media (max-width: 768px){
+  .top-sellers-main{
+    border: 0px !important;
+  }
+}
+
+@media (max-width: 738px){
+  .subheading-homepage{
+    text-align: start !important;
+  }
+
+  .subheading-homepage-btn{
+    justify-content: flex-start !important;
+  }
+
+  .homepage-main-banner{
+    padding: 5% 10%;
+  }
+  .cfcf{
+    margin: 0 !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+  }
+
+  .top-sellers-main{
+    margin: 0 !important;
+  }
+
+  .cat-text
+  {
+    font-size: 3rem !important;
+  }
+}
+
+@media (max-width: 947px){
+  .quotes-main-div{
+    width: 16rem !important;
+    padding: 10%;
+  }
+}
+
+@media (max-width: 330px){
+  .quotes-text{
+    font-size: 3rem !important;
+  }
+  .tyui{
+    font-size: 4rem !important;
+  }
+}
+
 
