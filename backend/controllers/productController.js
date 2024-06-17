@@ -105,8 +105,8 @@ export const getAllProductOfLocationController = async (req, res) => {
 
 export const getAllSellersOfLocationController = async (req, res) => {
   try {
-    const { city } = req.body;
-    const sellers = await sellerModel.find({ city: city });
+    const { city,page } = req.body;
+    const sellers = await sellerModel.find({ city: city }).skip((page-1)*6).limit(6);
     res.status(200).send({
       success: true,
       message: "Sellers Fetched",

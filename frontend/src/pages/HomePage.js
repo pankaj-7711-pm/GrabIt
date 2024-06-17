@@ -357,13 +357,14 @@ const HomePage = () => {
                   <div
                     className="categories-homepage"
                     style={{
-                      minWidth: "12rem",
+                      // minWidth: "12rem",
                       padding: "2rem",
                       border: "1px solid rgb(195, 194, 194)",
                       borderRadius: "15px",
                       margin: "2rem 1rem 2rem 0",
                       // color: "#424874",
                       fontSize: "1.4rem",
+                      textAlign:"center"
                     }}
                     onClick={() => navigate(`/${t}`)}
                   >
