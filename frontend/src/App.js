@@ -14,6 +14,7 @@ import UpdateProduct from './pages/Seller/UpdateProduct';
 import UpdateProfileSeller from './pages/Seller/UpdateProfileSeller';
 import Messages from './pages/Seller/Messages';
 import CategoryWiseSellers from './pages/CategoryWiseSellers';
+import SeperateSeller from './pages/SeperateSeller';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/:categoryname" element={<CategoryWiseSellers />} />
+        <Route path="/seller/:sid" element={<SeperateSeller />} />
         <Route path="/dashboard" element={<UserRoute />}>
           <Route path="user" element={<UserDashboard />} />
         </Route>

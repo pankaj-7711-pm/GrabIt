@@ -13,13 +13,7 @@ export const createProductController = async (req, res) => {
       category,
       offerPrice,
     } = req.body;
-    if (
-      !name ||
-      !description ||
-      price === undefined ||
-      !pics ||
-      !category
-    ) {
+    if (!name || !description || price === undefined || !pics || !category) {
       return res.send({ message: "All fields are required" });
     }
     const products = new productModel({
@@ -62,7 +56,10 @@ export const getAllProductOfSellerController = async (req, res) => {
 export const getSingleProductController = async (req, res) => {
   try {
     const { pid } = req.params;
-    const product = await productModel.findOne({ _id: pid }).populate("shop").populate("category");
+    const product = await productModel
+      .findOne({ _id: pid })
+      .populate("shop")
+      .populate("category");
     res.status(200).send({
       success: true,
       message: "Product Fetched",
@@ -105,12 +102,42 @@ export const getAllProductOfLocationController = async (req, res) => {
 
 export const getAllSellersOfLocationController = async (req, res) => {
   try {
-    const { city,page } = req.body;
-    const sellers = await sellerModel.find({ city: city }).skip((page-1)*6).limit(6);
+    const { city, page, category } = req.body;
+    var sellers;
+    var len;
+    if (city) {
+      const sel = await sellerModel.find({
+        type: category,
+        city:city
+      });
+      len = sel.length;
+      sellers = await sellerModel
+        .find({
+          type: category,
+          city: city,
+        })
+        .skip((page - 1) * 6)
+        .limit(6);
+    }
+    else {
+      const sel = await sellerModel
+        .find({
+          type: category,
+        });
+      len = sel.length;
+      sellers = await sellerModel
+        .find({
+          type: category,
+        })
+        .skip((page - 1) * 6)
+        .limit(6);
+    }
+    
     res.status(200).send({
       success: true,
       message: "Sellers Fetched",
       sellers,
+      len
     });
   } catch (error) {
     res.status(500).send({
@@ -133,13 +160,7 @@ export const updateProductController = async (req, res) => {
       offerPrice,
       category,
     } = req.body;
-    if (
-      !name ||
-      !description ||
-      price === undefined ||
-      !pics ||
-      !category
-    ) {
+    if (!name || !description || price === undefined || !pics || !category) {
       return res.send({ message: "All fields are required" });
     }
     const products = await productModel.findByIdAndUpdate(
@@ -174,7 +195,7 @@ export const deleteProductController = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Error in deleting product",
-      error, 
+      error,
     });
   }
 };

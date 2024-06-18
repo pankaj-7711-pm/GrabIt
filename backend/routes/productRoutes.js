@@ -31,7 +31,7 @@ router.get("/get-single-product/:pid", getSingleProductController);
 router.get("/get-product-location", getAllProductOfLocationController);
 
 // get all sellers of a particular location
-router.get("/get-sellers-location", getAllSellersOfLocationController);
+router.post("/get-sellers-category", getAllSellersOfLocationController);
 
 // get all sellers
 router.get("/get-all-sellers", getAllSellersController);
