@@ -8,6 +8,7 @@ import {
   getAllSellersController,
   getAllSellersOfLocationController,
   getSingleProductController,
+  getSingleSellerController,
   updateProductController,
 } from "../controllers/productController.js";
 
@@ -35,6 +36,9 @@ router.post("/get-sellers-category", getAllSellersOfLocationController);
 
 // get all sellers
 router.get("/get-all-sellers", getAllSellersController);
+
+// get all sellers
+router.get("/get-single-seller/:sid", getSingleSellerController);
 
 //update product
 router.put(

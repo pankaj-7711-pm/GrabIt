@@ -141,9 +141,14 @@ const CategoryWiseSellers = () => {
             {sellers?.map((s, index) => {
               return (
                 <div
-                  className="card text-bg-dark"
-                  style={{ width: "20rem", margin: "2rem", height: "18rem", cursor:"pointer" }}
-                  onClick={()=>navigate(`/seller/${s._id}`)}
+                  className="card text-bg-dark sellers-main-category-wise"
+                  style={{
+                    width: "20rem",
+                    margin: "2rem",
+                    height: "18rem",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => navigate(`/seller/${s._id}`)}
                 >
                   <img
                     src={s.pic}
@@ -152,7 +157,7 @@ const CategoryWiseSellers = () => {
                     style={{ height: "18rem" }}
                   />
                   <div
-                    className="card-img-overlay"
+                    className="card-img-overlay sellers-card"
                     style={{
                       backgroundColor: "rgba(0, 0, 0, 0.5)",
                       display: "flex",
@@ -184,7 +189,10 @@ const CategoryWiseSellers = () => {
                           <FaStarHalfAlt size={24} color="yellow" />
                         }
                       />
-                      <p className="ms-1" style={{fontSize:"1.2rem"}}>{`(${s.rating})`}</p>
+                      <p
+                        className="ms-1"
+                        style={{ fontSize: "1.2rem" }}
+                      >{`(${s.rating})`}</p>
                     </div>
                   </div>
                 </div>

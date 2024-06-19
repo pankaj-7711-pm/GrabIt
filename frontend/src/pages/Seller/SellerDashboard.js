@@ -103,9 +103,6 @@ const SellerDashboard = () => {
           style={{
             width: "100%",
             minHeight: "100vh",
-            // border: "1px solid rgb(195, 194, 194)",
-            // backgroundColor: "white",
-            // borderRadius: "5px",
           }}
         >
           <div style={{ padding: "5% 5% 1% 5%" }}>
@@ -152,27 +149,19 @@ const SellerDashboard = () => {
                     className="seller-dash-details col p-0 m-0 col-lg-7 col-md-12"
                     style={
                       {
-                        // height: "19rem",
+                        height: "19rem",
                         // width: "60%",
-                        // borderRadius: "5px",
-                        // border: "1px solid rgb(195, 194, 194)",
-                        // padding: "1rem 2rem",
-                        // marginBottom:"2rem"
                       }
                     }
                   >
                     <Slider {...settings}>
                       {user?.user.pics.map((image, index) => (
-                        <div key={index}>
+                        <div key={index} className="slider-image-wrapper">
                           <img
                             src={image}
-                            className="card-img-top"
+                            className="card-img-top slider-image"
                             alt={`Slide ${index}`}
-                            style={{
-                              height: "100%",
-                              objectFit: "cover",
-                              borderRadius: "5px",
-                            }}
+                    
                           />
                         </div>
                       ))}
@@ -184,10 +173,10 @@ const SellerDashboard = () => {
               {/* <div style={{ padding: "1rem 15%" }}>
                 {user?.user?.discription}
               </div> */}
-              <div className="row mt-3" style={{ padding: "1rem 15% 0 15%" }}>
+              <div className="row mt-4" style={{ padding: "1rem 15% 0 15%" }}>
                 <Accordion
                   style={{
-                    backgroundColor: "#F4EEFF",
+                    // backgroundColor: "#F4EEFF",
                     border: "1px solid rgb(195, 194, 194)",
                   }}
                 >
@@ -204,7 +193,7 @@ const SellerDashboard = () => {
               <div className="row" style={{ padding: "0.5rem 15%" }}>
                 <Accordion
                   style={{
-                    backgroundColor: "#F4EEFF",
+                    // backgroundColor: "#F4EEFF",
                     border: "1px solid rgb(195, 194, 194)",
                   }}
                 >
@@ -226,7 +215,7 @@ const SellerDashboard = () => {
               <div className="row" style={{ padding: "0rem 15%" }}>
                 <Accordion
                   style={{
-                    backgroundColor: "#F4EEFF",
+                    // backgroundColor: "#F4EEFF",
                     border: "1px solid rgb(195, 194, 194)",
                   }}
                 >
@@ -317,7 +306,7 @@ const SellerDashboard = () => {
                   style={{
                     width: "100%",
 
-                    height: "0.5px",
+                    height: "2px",
                     backgroundColor: "black",
                     border: "none",
                   }}
@@ -328,7 +317,14 @@ const SellerDashboard = () => {
                   <h2 style={{ textAlign: "center" }}>Products</h2>
                 </div>
               ) : (
-                <div style={{height:"20vh", display:"flex", justifyContent:"center", alignItems:"center"}}>
+                <div
+                  style={{
+                    height: "20vh",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <p style={{ textAlign: "center" }}>No Products to Show</p>
                 </div>
               )}

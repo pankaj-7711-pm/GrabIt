@@ -216,3 +216,22 @@ export const getAllSellersController = async (req, res) => {
     });
   }
 };
+
+
+export const getSingleSellerController = async (req, res) => {
+  try {
+    const { sid } = req.params;
+    const seller = await sellerModel.findOne({_id:sid});
+    res.status(200).send({
+      success: true,
+      message: "Seller Fetched",
+      seller,
+    });
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "Error in getting Sellers",
+      error,
+    });
+  }
+};
