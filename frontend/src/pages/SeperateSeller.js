@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { Textarea, useSafeLayoutEffect, useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import StarIcon from "@mui/icons-material/Star";
 import axios from "axios";
 import {
   Accordion,
@@ -38,6 +39,7 @@ const SeperateSeller = () => {
   const [categories, setCategories] = useState([]);
   const [rating, setRating] = useState();
   const [message, setMessage] = useState();
+  const [reviews, setReviews] = useState([]);
 
   const style = {
     position: "absolute",
@@ -107,6 +109,16 @@ const SeperateSeller = () => {
       });
       return;
     }
+    if (!message) {
+      toast({
+        title: "Message is required",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+      return;
+    }
     try {
       const { data } = await axios.post(
         `/api/v1/review/review-seller/${params.sid}/${user?.user?._id}`,
@@ -125,9 +137,21 @@ const SeperateSeller = () => {
     } catch (error) {}
   };
 
+  const getReviews = async () => {
+    try {
+      const { data } = await axios.get(`/api/v1/review//seller-all-reviews/${params.sid}`);
+      if (data?.success) {
+        setReviews(data.reviews);
+      }
+    } catch (error) {
+      
+    }
+  }
+
   useEffect(() => {
     getSeller();
     getCategories();
+    getReviews();
   }, []);
 
   return (
@@ -184,7 +208,7 @@ const SeperateSeller = () => {
                         <p
                           className="ms-1"
                           // style={{ fontSize: "1.1rem", marginTop: "2px" }}
-                        >{`(${seller?.rating})`}</p>
+                        >{`(${parseFloat(seller?.rating).toFixed(1)})`}</p>
                       </div>
                     </div>
                   </div>
@@ -347,7 +371,7 @@ const SeperateSeller = () => {
                             padding: "1rem 2rem",
                             minWidth: "5rem",
                             margin: "1rem",
-                            border: "3px solid rgb(195, 194, 194)",
+                            border: "3px solid #424874",
                             borderRadius: "5px",
                             cursor: "pointer",
                           }}
@@ -370,6 +394,82 @@ const SeperateSeller = () => {
                   <p style={{ textAlign: "center" }}>No Categories to Show</p>
                 </div>
               )}
+              <div>
+                {reviews?.length !== 0 && (
+                  <h2 style={{ textAlign: "center", marginTop: "2rem" }}>
+                    Reviews
+                  </h2>
+                )}
+                {reviews?.length === 0 && (
+                  
+                  <div style={{  marginTop: "2rem", display:"flex", height:"20vh", justifyContent:"center", alignItems:"center" }}>
+                    No Reviews to show
+                  </div>
+                )}
+                <div
+                  style={{
+                    padding: "2% 5%",
+                    display: "flex",
+                    justifyContent: "space-around",
+                    alignItems: "space-around",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  {reviews?.map((q, index) => {
+                    return (
+                      <div
+                        className="quotes-main-div"
+                        style={{
+                          width: "30%",
+                          marginBottom: "5rem",
+                          padding: "1rem",
+                          border: "1px solid rgb(195, 194, 194)",
+                          borderRadius: "5px",
+                        }}
+                      >
+                        <div style={{ display: "flex" }}>
+                          <div>
+                            <Avatar
+                              style={{ height: "2.8rem", width: "2.8rem" }}
+                              alt="Remy Sharp"
+                              src={q.user.pic}
+                            />
+                          </div>
+                          <div style={{ marginLeft: "8px" }}>
+                            <h5 style={{ margin: "0" }}>{q.user.name}</h5>
+                            <p style={{ margin: "0", fontSize: "15px" }}>
+                              <span
+                                style={{
+                                  fontSize: "15px",
+                                  display: "flex",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <StarIcon
+                                  className="star-icon"
+                                  style={{ fontSize: "15px" }}
+                                />
+                                &nbsp;
+                                <span
+                                  style={{
+                                    marginTop: "1.81px",
+                                    fontSize: "14px",
+                                  }}
+                                >
+                                  {q.rating}
+                                </span>
+                              </span>
+                            </p>
+                          </div>
+                        </div>
+                        <p style={{ fontSize: "15px", margin: "1rem 0 0 0" }}>
+                          {q.message}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
               <Modal
                 open={open}
                 onClose={handleClose}
@@ -403,7 +503,7 @@ const SeperateSeller = () => {
                     }}
                     onChange={(e) => setMessage(e.target.value)}
                     value={message}
-                    placeholder="Tell something about the seller (Optional)"
+                    placeholder="Tell something about the seller . . ."
                   />
                   <Button
                     style={{

@@ -192,7 +192,7 @@ const CategoryWiseSellers = () => {
                       <p
                         className="ms-1"
                         style={{ fontSize: "1.2rem" }}
-                      >{`(${s.rating})`}</p>
+                      >{`(${parseFloat(s?.rating).toFixed(1)})`}</p>
                     </div>
                   </div>
                 </div>

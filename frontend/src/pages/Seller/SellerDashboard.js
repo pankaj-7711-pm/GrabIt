@@ -140,19 +140,19 @@ const SellerDashboard = () => {
                             <FaStarHalfAlt size={24} color="yellow" />
                           }
                         />
-                        <p className="ms-1">{`(${user?.user.rating})`}</p>
+                        <p className="ms-1">{`(${parseFloat(
+                          user?.user?.rating
+                        ).toFixed(1)})`}</p>
                       </div>
                     </div>
                   </div>
 
                   <div
                     className="seller-dash-details col p-0 m-0 col-lg-7 col-md-12"
-                    style={
-                      {
-                        height: "19rem",
-                        // width: "60%",
-                      }
-                    }
+                    style={{
+                      height: "19rem",
+                      // width: "60%",
+                    }}
                   >
                     <Slider {...settings}>
                       {user?.user.pics.map((image, index) => (
@@ -161,7 +161,6 @@ const SellerDashboard = () => {
                             src={image}
                             className="card-img-top slider-image"
                             alt={`Slide ${index}`}
-                    
                           />
                         </div>
                       ))}
@@ -377,7 +376,9 @@ const SellerDashboard = () => {
                               <FaStarHalfAlt size={24} color="yellow" />
                             }
                           />
-                          <p className="ms-1">{`(${product.rating})`}</p>
+                          <p className="ms-1">{`(${parseFloat(
+                            product?.rating
+                          ).toFixed(1)})`}</p>
                         </div>
                         <p className="card-text" style={{ margin: "0" }}>
                           {product.description.length > 30

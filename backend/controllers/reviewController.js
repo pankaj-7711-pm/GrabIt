@@ -42,3 +42,22 @@ export const createReviewController = async (req, res) => {
     });
   }
 };
+
+
+export const getReviewController = async (req, res) => {
+  try {
+    const { sid } = req.params;
+    const reviews = await reviewModel.find({ shop: sid }).populate("user");
+    res.status(201).send({
+      success: true,
+      message: "review fetched successfully",
+      reviews
+    });
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "Error in geting reviews of a seller",
+      error,
+    });
+  }
+}

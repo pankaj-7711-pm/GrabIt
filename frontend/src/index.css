@@ -50,6 +50,10 @@ body{
   font-weight: 200 !important;
 }
 
+.star-icon{
+  color: rgb(240, 225, 12);
+}
+
 .aa{
   border: 1px solid rgb(195, 194, 194) !important;
 }

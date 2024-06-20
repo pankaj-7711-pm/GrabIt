@@ -155,7 +155,7 @@ const HomePage = () => {
                     </p>
                     <div
                       className=" "
-                      style={{ display: "flex", justifyContent: "center" }}
+                      style={{ display: "flex", justifyContent: "center", flexDirection:"column", alignItems:"center" }}
                     >
                       <Rating
                         initialRating={s.rating}
@@ -166,7 +166,10 @@ const HomePage = () => {
                           <FaStarHalfAlt size={24} color="yellow" />
                         }
                       />
-                      <p className="ms-1">{`(${s.rating})`}</p>
+
+                      <p className="ms-1" style={{textAlign:"center"}}>{`(${parseFloat(
+                        s?.rating
+                      ).toFixed(1)})`}</p>
                     </div>
                   </div>
                 );
