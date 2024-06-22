@@ -11,6 +11,7 @@ import {
   getSingleProductController,
   getSingleSellerController,
   updateProductController,
+  wishlistProductController,
 } from "../controllers/productController.js";
 
 const router = express.Router();
@@ -59,6 +60,9 @@ router.delete(
   isSeller,
   deleteProductController
 );
+
+// wishlist product
+router.post("/wishlist/:pid/:cid", wishlistProductController);
 
 
 export default router;

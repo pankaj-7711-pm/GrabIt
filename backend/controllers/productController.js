@@ -1,5 +1,6 @@
 import productModel from "../models/productModel.js";
 import sellerModel from "../models/sellerModel.js";
+import wishlistModel from "../models/wishlistModel.js";
 
 export const createProductController = async (req, res) => {
   try {
@@ -108,7 +109,7 @@ export const getAllSellersOfLocationController = async (req, res) => {
     if (city) {
       const sel = await sellerModel.find({
         type: category,
-        city:city
+        city: city,
       });
       len = sel.length;
       sellers = await sellerModel
@@ -118,12 +119,10 @@ export const getAllSellersOfLocationController = async (req, res) => {
         })
         .skip((page - 1) * 6)
         .limit(6);
-    }
-    else {
-      const sel = await sellerModel
-        .find({
-          type: category,
-        });
+    } else {
+      const sel = await sellerModel.find({
+        type: category,
+      });
       len = sel.length;
       sellers = await sellerModel
         .find({
@@ -132,12 +131,12 @@ export const getAllSellersOfLocationController = async (req, res) => {
         .skip((page - 1) * 6)
         .limit(6);
     }
-    
+
     res.status(200).send({
       success: true,
       message: "Sellers Fetched",
       sellers,
-      len
+      len,
     });
   } catch (error) {
     res.status(500).send({
@@ -217,11 +216,10 @@ export const getAllSellersController = async (req, res) => {
   }
 };
 
-
 export const getSingleSellerController = async (req, res) => {
   try {
     const { sid } = req.params;
-    const seller = await sellerModel.findOne({_id:sid});
+    const seller = await sellerModel.findOne({ _id: sid });
     res.status(200).send({
       success: true,
       message: "Seller Fetched",
@@ -242,13 +240,16 @@ export const categoryWiseProductController = async (req, res) => {
     const { page } = req.body;
     const pro = await productModel.find({ category: cid });
     const len = pro.length;
-    const products = await productModel.find({ category: cid }).skip((page-1)*6).limit(6);
+    const products = await productModel
+      .find({ category: cid })
+      .skip((page - 1) * 6)
+      .limit(6);
     res.status(200).send({
       success: true,
       message: "Products Fetched",
       products,
-      len
-    })
+      len,
+    });
   } catch (error) {
     res.status(500).send({
       success: false,
@@ -256,4 +257,39 @@ export const categoryWiseProductController = async (req, res) => {
       error,
     });
   }
-}
+};
+
+export const wishlistProductController = async (req, res) => {
+  try {
+    const { pid, cid } = req.params;
+
+    const checkwishList = await wishlistModel.findOne({ product: pid, user: cid });
+
+    if (checkwishList) {
+      console.log("already widhlisted")
+      return res.send({
+        success: false,
+        message: "Product already WishListed",
+      });
+    }
+
+    const wishlist = new wishlistModel({
+      product: pid,
+      user: cid,
+    });
+
+    await wishlist.save();
+
+    res.status(201).send({
+      success: true,
+      message: "Product Wishlisted Successfully",
+    });
+    
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "Error in wishlisting product",
+      error,
+    });
+  }
+};

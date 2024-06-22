@@ -246,7 +246,9 @@ const SeperateSeller = () => {
                   >
                     Description
                   </AccordionSummary>
-                  <AccordionDetails>{seller?.discription}</AccordionDetails>
+                  <AccordionDetails style={{ textAlign: "justify" }}>
+                    {seller?.discription}
+                  </AccordionDetails>
                 </Accordion>
               </div>
               <div className="row" style={{ padding: "0.5rem 15%" }}>
@@ -327,7 +329,7 @@ const SeperateSeller = () => {
                       }}
                       // onClick={() => navigate("/dashboard/messages-seller")}
                     >
-                      Messages
+                      Message
                     </Button>
                   </div>
                 </div>
@@ -375,7 +377,9 @@ const SeperateSeller = () => {
                             borderRadius: "5px",
                             cursor: "pointer",
                           }}
-                          onClick={()=>navigate(`/category-products/${c._id}`)}
+                          onClick={() =>
+                            navigate(`/category-products/${c._id}`)
+                          }
                         >
                           {c.name}
                         </div>
@@ -402,8 +406,15 @@ const SeperateSeller = () => {
                   </h2>
                 )}
                 {reviews?.length === 0 && (
-                  
-                  <div style={{  marginTop: "2rem", display:"flex", height:"20vh", justifyContent:"center", alignItems:"center" }}>
+                  <div
+                    style={{
+                      marginTop: "2rem",
+                      display: "flex",
+                      height: "20vh",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
                     No Reviews to show
                   </div>
                 )}

@@ -186,7 +186,9 @@ const SellerDashboard = () => {
                   >
                     Description
                   </AccordionSummary>
-                  <AccordionDetails>{user?.user?.discription}</AccordionDetails>
+                  <AccordionDetails style={{ textAlign: "justify" }}>
+                    {user?.user?.discription}
+                  </AccordionDetails>
                 </Accordion>
               </div>
               <div className="row" style={{ padding: "0.5rem 15%" }}>
