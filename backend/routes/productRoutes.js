@@ -1,6 +1,7 @@
 import express from "express";
 import { isSeller, requireSignIn } from "../helpers/authHelpers.js";
 import {
+  categoryWiseProductController,
   createProductController,
   deleteProductController,
   getAllProductOfLocationController,
@@ -39,6 +40,9 @@ router.get("/get-all-sellers", getAllSellersController);
 
 // get all sellers
 router.get("/get-single-seller/:sid", getSingleSellerController);
+
+// get all products
+router.post("/category-wise-products/:cid", categoryWiseProductController);
 
 //update product
 router.put(

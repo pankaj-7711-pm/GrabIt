@@ -80,7 +80,7 @@ const CategoryWiseSellers = () => {
             style={{ width: "60%" }}
             variant="outlined"
             onChange={(e) => setCty(e.target.value)}
-            placeholder="Search by City"
+            placeholder="Search Sellers by City"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">

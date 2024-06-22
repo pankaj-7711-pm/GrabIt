@@ -375,6 +375,7 @@ const SeperateSeller = () => {
                             borderRadius: "5px",
                             cursor: "pointer",
                           }}
+                          onClick={()=>navigate(`/category-products/${c._id}`)}
                         >
                           {c.name}
                         </div>

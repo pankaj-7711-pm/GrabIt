@@ -1,6 +1,6 @@
 import express from "express";
 import { isSeller, requireSignIn } from "../helpers/authHelpers.js";
-import { createCategoryController, deleteCategoryController, getCategoryController, updateCategoryController } from "../controllers/categoryController.js";
+import { createCategoryController, deleteCategoryController, getCategoryController, getSingleCategoryController, updateCategoryController } from "../controllers/categoryController.js";
 
 
 const router = express.Router();
@@ -26,6 +26,9 @@ router.get(
   "/get-category/:sid",
   getCategoryController
 );
+
+//get single category
+router.get("/get-single-category/:cid", getSingleCategoryController);
 
 //delete category
 router.delete(

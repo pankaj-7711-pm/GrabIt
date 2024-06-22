@@ -235,3 +235,25 @@ export const getSingleSellerController = async (req, res) => {
     });
   }
 };
+
+export const categoryWiseProductController = async (req, res) => {
+  try {
+    const { cid } = req.params;
+    const { page } = req.body;
+    const pro = await productModel.find({ category: cid });
+    const len = pro.length;
+    const products = await productModel.find({ category: cid }).skip((page-1)*6).limit(6);
+    res.status(200).send({
+      success: true,
+      message: "Products Fetched",
+      products,
+      len
+    })
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "Error in getting products of the category",
+      error,
+    });
+  }
+}

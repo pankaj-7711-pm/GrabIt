@@ -15,6 +15,8 @@ import UpdateProfileSeller from './pages/Seller/UpdateProfileSeller';
 import Messages from './pages/Seller/Messages';
 import CategoryWiseSellers from './pages/CategoryWiseSellers';
 import SeperateSeller from './pages/SeperateSeller';
+import CategoryWiseProducts from './pages/CategoryWiseProducts';
+import SeperateProduct from './pages/SeperateProduct';
 
 function App() {
   return (
@@ -26,6 +28,14 @@ function App() {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/:categoryname" element={<CategoryWiseSellers />} />
         <Route path="/seller/:sid" element={<SeperateSeller />} />
+        <Route
+          path="/individual-product/:pid"
+          element={<SeperateProduct />}
+        />
+        <Route
+          path="/category-products/:cid"
+          element={<CategoryWiseProducts />}
+        />
         <Route path="/dashboard" element={<UserRoute />}>
           <Route path="user" element={<UserDashboard />} />
         </Route>
