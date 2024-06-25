@@ -17,6 +17,7 @@ import CategoryWiseSellers from './pages/CategoryWiseSellers';
 import SeperateSeller from './pages/SeperateSeller';
 import CategoryWiseProducts from './pages/CategoryWiseProducts';
 import SeperateProduct from './pages/SeperateProduct';
+import ChatPage from './pages/user/ChatPage';
 
 function App() {
   return (
@@ -28,16 +29,17 @@ function App() {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/:categoryname" element={<CategoryWiseSellers />} />
         <Route path="/seller/:sid" element={<SeperateSeller />} />
-        <Route
-          path="/individual-product/:pid"
-          element={<SeperateProduct />}
-        />
+        <Route path="/individual-product/:pid" element={<SeperateProduct />} />
         <Route
           path="/category-products/:cid"
           element={<CategoryWiseProducts />}
         />
         <Route path="/dashboard" element={<UserRoute />}>
           <Route path="user" element={<UserDashboard />} />
+          <Route
+            path="chat-with-seller/:sid"
+            element={<ChatPage />}
+          />
         </Route>
         <Route path="/dashboard" element={<SellerRoute />}>
           <Route path="seller" element={<SellerDashboard />} />

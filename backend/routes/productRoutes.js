@@ -4,12 +4,14 @@ import {
   categoryWiseProductController,
   createProductController,
   deleteProductController,
+  deleteWishlistController,
   getAllProductOfLocationController,
   getAllProductOfSellerController,
   getAllSellersController,
   getAllSellersOfLocationController,
   getSingleProductController,
   getSingleSellerController,
+  getWishlistController,
   updateProductController,
   wishlistProductController,
 } from "../controllers/productController.js";
@@ -39,7 +41,7 @@ router.post("/get-sellers-category", getAllSellersOfLocationController);
 // get all sellers
 router.get("/get-all-sellers", getAllSellersController);
 
-// get all sellers
+// get single seller
 router.get("/get-single-seller/:sid", getSingleSellerController);
 
 // get all products
@@ -63,6 +65,12 @@ router.delete(
 
 // wishlist product
 router.post("/wishlist/:pid/:cid", wishlistProductController);
+
+// get wishlist product
+router.get("/get-wishlist/:cid", getWishlistController);
+
+// delete wishlist product
+router.delete("/delete-wishlist/:pid", deleteWishlistController);
 
 
 export default router;

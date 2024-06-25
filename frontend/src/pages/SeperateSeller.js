@@ -327,7 +327,7 @@ const SeperateSeller = () => {
                         backgroundColor: "#424874",
                         minWidth: "10rem",
                       }}
-                      // onClick={() => navigate("/dashboard/messages-seller")}
+                      onClick={() => navigate(`/dashboard/chat-with-seller/${seller?._id}`)}
                     >
                       Message
                     </Button>

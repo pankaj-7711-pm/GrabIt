@@ -5,6 +5,7 @@ import authRoutes from "./routes/authRoutes.js"
 import productRoutes from "./routes/productRoutes.js"
 import categoryRoutes from "./routes/categoryRoutes.js"
 import reviewRoutes from "./routes/reviewRoutes.js"
+import chatRoutes from "./routes/chatRoutes.js"
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/review", reviewRoutes);
+app.use("/api/v1/chat", chatRoutes);
 
 app.get("/", (req, res) => {
   res.send("<h1>Welcome to Advertisement app</h1>");

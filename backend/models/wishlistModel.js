@@ -11,6 +11,6 @@ const wishListSchema = mongoose.Schema({
     ref: "customer",
     required: true,
   },
-});
+},{ timestamps: true });
 
 export default mongoose.model("wishList", wishListSchema);

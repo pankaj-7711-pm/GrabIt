@@ -293,3 +293,38 @@ export const wishlistProductController = async (req, res) => {
     });
   }
 };
+
+export const getWishlistController = async (req, res) => {
+  try {
+    const { cid } = req.params;
+    const result = await wishlistModel.find({ user: cid }).populate("product");
+    res.status(201).send({
+      success: true,
+      message: "wishlisted Products fetched successfully",
+      result
+    });
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "Error in wishlisting product",
+      error,
+    });
+  }
+}
+
+export const deleteWishlistController = async (req, res) => {
+  try {
+    const { pid } = req.params;
+    await wishlistModel.findByIdAndDelete(pid);
+    res.status(200).send({
+      success: true,
+      message: "Product Deleted Successfully",
+    }); 
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "Error in deleting wishlisted product",
+      error,
+    });
+  }
+}
