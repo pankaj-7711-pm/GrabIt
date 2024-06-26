@@ -336,8 +336,8 @@ const SellerDashboard = () => {
                   display: "flex",
                   flexWrap: "wrap",
                   // padding: "0 15%",
-                  // justifyContent: "center",
-                  // alignItems: "center",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
                 {products?.map((product) => {
@@ -442,17 +442,7 @@ const SellerDashboard = () => {
                   );
                 })}
               </div>
-              {products?.length !== 0 && (
-                <div style={{ display: "flex" }}>
-                  <Pagination
-                    style={{ marginLeft: "auto" }}
-                    count={Math.ceil(products?.length / 6)}
-                    variant="outlined"
-                    shape="rounded"
-                    className="custom-pagination"
-                  />
-                </div>
-              )}
+              
             </div>
           </div>
         </div>

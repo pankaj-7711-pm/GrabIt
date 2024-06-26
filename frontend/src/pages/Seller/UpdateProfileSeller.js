@@ -20,6 +20,8 @@ import { Textarea } from "@chakra-ui/react";
 import Layout from "../../components/layout/Layout";
 import { ConState } from "../../context/ConProvider";
 import { ShopTypes } from "../ShopType";
+import { IconButton } from "@mui/material";
+import { CloseIcon } from "@chakra-ui/icons";
 
 const MotionBox = motion(Box);
 // import { ConState } from "../../context/ConProvider";
@@ -48,6 +50,11 @@ const UpdateProfileSeller = () => {
   const { user,setUser} = ConState();
 
   const [page, setPage] = useState(0);
+
+  const removeImage = (index) => {
+    const updatedPics = pics.filter((_, i) => i !== index);
+    setPics(updatedPics);
+  };
 
   useEffect(() => {
     setName(user?.user?.name);
@@ -170,7 +177,7 @@ const UpdateProfileSeller = () => {
       !state ||
       !email ||
       !phone ||
-      !pics.length || !password || !confirmpassword || !type
+      pics.length===0 || !password || !confirmpassword || !type
     ) {
       toast({
         title: "Please Fill all the Feilds",
@@ -203,7 +210,7 @@ const UpdateProfileSeller = () => {
       });
       return;
     }
-    // console.log(`${phone}, ${address}, ${city}`);
+    console.log(type);
     try {
       const { data } = await axios.put("/api/v1/auth/update-seller", {
         name,
@@ -218,7 +225,8 @@ const UpdateProfileSeller = () => {
         password,
         pic,
         pics,
-        isSeller
+        isSeller,
+        type
       });
       // console.log(data);
       if (data?.success) {
@@ -425,11 +433,59 @@ const UpdateProfileSeller = () => {
         />
       </FormControl>
 
-      <AvatarGroup size="md" max={3}>
-        {pics.map((p) => {
-          return <Avatar src={p} />;
-        })}
-      </AvatarGroup>
+      {pics.length !== 0 && (
+        <div
+          className="pics-div-create-product"
+          style={{
+            width: "22.4rem",
+            backgroundColor: "white",
+            display: "flex",
+            flexWrap: "wrap",
+            marginTop: "1rem",
+            padding: "1rem",
+            borderRadius: "7px",
+            border: "1px solid rgb(195, 194, 194)",
+            position: "relative",
+            justifyContent: "space-around",
+            alignItems: "space-around",
+          }}
+        >
+          {pics?.map((pic, ind) => (
+            <div
+              key={ind}
+              style={{
+                position: "relative",
+                margin: "1rem 0.5rem",
+              }}
+            >
+              <IconButton
+                style={{
+                  position: "absolute",
+                  top: "-10px",
+                  right: "-10px",
+                  backgroundColor: "white",
+                  borderRadius: "50%",
+                  padding: "2px",
+                  zIndex: 1,
+                }}
+                onClick={() => removeImage(ind)}
+              >
+                <CloseIcon fontSize="small" />
+              </IconButton>
+              <img
+                style={{
+                  height: "6rem",
+                  width: "6rem",
+                  borderRadius: "5px",
+                  display: "block",
+                }}
+                src={pic}
+                alt=""
+              />
+            </div>
+          ))}
+        </div>
+      )}
       <Button
         colorScheme="blue"
         width={"49%"}
@@ -528,14 +584,13 @@ const UpdateProfileSeller = () => {
   ];
 
   return (
-    <Layout
-    >
+    <Layout>
       <div
         style={{
           display: "flex",
           // flexDirection: "column",
           justifyContent: "center",
-          flexWrap:"wrap",
+          flexWrap: "wrap",
           alignItems: "center",
           minHeight: "80vh",
         }}
@@ -546,10 +601,13 @@ const UpdateProfileSeller = () => {
             padding: "5rem 5rem",
             backgroundColor: "white",
             borderRadius: "5px",
-            margin:"1rem 2rem"
+            margin: "1rem 2rem",
+            border: "1px solid rgb(195, 194, 194)",
           }}
         >
-          <h2 className="update-seller-text" style={{marginBottom:"1rem"}}>Update Profile</h2>
+          <h2 className="update-seller-text" style={{ marginBottom: "1rem" }}>
+            Update Profile
+          </h2>
           {pages[page]}
         </div>
       </div>

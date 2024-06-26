@@ -225,9 +225,11 @@ const SeperateProduct = () => {
                 }}
               >
                 <h2 style={{ fontSize: "2rem" }}>{product.name}</h2>
-                <Button style={{}} onClick={() => handleWishlist()}>
-                  Add to Wishlist
-                </Button>
+                {user?.user && user?.user?.isSeller === false && (
+                  <Button style={{}} onClick={() => handleWishlist()}>
+                    Add to Wishlist
+                  </Button>
+                )}
               </div>
               <div className="d-flex mt-2">
                 <Rating

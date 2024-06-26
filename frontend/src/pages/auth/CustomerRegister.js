@@ -29,6 +29,7 @@ const CustomerRegister = () => {
   const [confirmpassword, setConfirmpassword] = useState();
   const [pic, setPic] = useState();
   const [picLoading, setPicLoading] = useState(false);
+  const [otpLoading, setOtpLoading] = useState(false);
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -92,6 +93,7 @@ const CustomerRegister = () => {
       });
       return;
     }
+    setOtpLoading(true);
     try {
       const { data } = await axios.post("/api/v1/auth/sendotp", { email });
       if (data?.success) {
@@ -107,6 +109,7 @@ const CustomerRegister = () => {
           position: "top",
         });
       }
+      setOtpLoading(false);
     } catch (error) {
       toast({
         title: "Something went wrong",
@@ -115,6 +118,7 @@ const CustomerRegister = () => {
         isClosable: true,
         position: "top",
       });
+      setOtpLoading(false);
     }
   };
 
@@ -126,7 +130,7 @@ const CustomerRegister = () => {
         status: "warning",
         duration: 5000,
         isClosable: true,
-        position: "bottom",
+        position: "top",
       });
       setPicLoading(false);
       return;
@@ -137,7 +141,7 @@ const CustomerRegister = () => {
         status: "warning",
         duration: 5000,
         isClosable: true,
-        position: "bottom",
+        position: "top",
       });
       return;
     }
@@ -217,7 +221,12 @@ const CustomerRegister = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
               <InputRightElement width={"4.5rem"}>
-                <Button h={"1.75rem"} size="sm" onClick={handleClickEmail}>
+                <Button
+                  h={"1.75rem"}
+                  size="sm"
+                  onClick={handleClickEmail}
+                  isLoading={otpLoading}
+                >
                   Verify
                 </Button>
               </InputRightElement>
@@ -317,7 +326,7 @@ const CustomerRegister = () => {
             onClick={submitHandler}
             isLoading={picLoading}
           >
-            Continue
+            Sign Up
           </Button>
         </>
       )}

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import Layout from "../../components/layout/Layout";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import {
@@ -14,22 +13,23 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import ScrollableFeed from "react-scrollable-feed";
-import { ConState } from "../../context/ConProvider";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { ConState } from "../../context/ConProvider";
 
-const ChatPage = () => {
+
+
+
+const ChatWithUser = () => {
   const params = useParams();
   const navigate = useNavigate();
   const toast = useToast();
-  const [seller, setSeller] = useState();
   const [selectedChat, setSelectedChat] = useState();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState();
   const [cid, setCid] = useState();
   const [messages, setMessages] = useState([]);
-  const [senderRole, setSenderRole] = useState("Customer");
+  const [senderRole, setSenderRole] = useState("Seller");
   const { user } = ConState();
 
   const messagesEndRef = useRef(null);
@@ -44,21 +44,10 @@ const ChatPage = () => {
     return i > 0 && messages[i - 1].senderRole === m.senderRole;
   };
 
-  const getSeller = async () => {
-    try {
-      const { data } = await axios.get(
-        `/api/v1/product/get-single-seller/${params.sid}`
-      );
-      if (data?.success) {
-        setSeller(data?.seller);
-      }
-    } catch (error) {}
-  };
-
   const getChat = async () => {
     try {
-      const { data } = await axios.post(
-        `/api/v1/chat/create-chat/${params.sid}`
+      const { data } = await axios.get(
+        `/api/v1/chat/get-single-chat/${params.cid}`
       );
       if (data?.success) {
         setSelectedChat(data.chat);
@@ -75,10 +64,12 @@ const ChatPage = () => {
       );
       if (data?.success) {
         setMessages(data.messages);
+        
       }
       setLoading(false);
     } catch (error) {}
   };
+
 
   const handleSend = async () => {
     if (!message) {
@@ -112,18 +103,18 @@ const ChatPage = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(selectedChat);
-  }, [selectedChat]);
+  // useEffect(() => {
+  //   console.log(selectedChat);
+  // }, [selectedChat]);
 
   useEffect(() => {
     getMessages();
   }, [selectedChat]);
 
   useEffect(() => {
-    getSeller();
     getChat();
   }, []);
+
   return (
     <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
       <div
@@ -136,7 +127,7 @@ const ChatPage = () => {
           padding: "2% 2%",
         }}
       >
-        <h5>{seller?.name}</h5>
+        <h5>{selectedChat?.user?.name}</h5>
         <Box
           display="flex"
           flexDir="column"
@@ -172,10 +163,10 @@ const ChatPage = () => {
                 {messages &&
                   messages.map((m, i) => (
                     <div style={{ display: "flex" }} key={m._id}>
-                      {m.senderRole === "Seller" &&
+                      {m.senderRole === "Customer" &&
                         !isSameUser(messages, m, i) && (
                           <Tooltip
-                            label={seller?.name}
+                            label={selectedChat?.user?.name}
                             placement="bottom-start"
                             hasArrow
                           >
@@ -184,21 +175,21 @@ const ChatPage = () => {
                               mr={1}
                               size="sm"
                               cursor="pointer"
-                              name={seller?.name}
-                              src={seller?.pic}
+                              name={selectedChat?.user?.name}
+                              src={selectedChat?.user?.pic}
                             />
                           </Tooltip>
                         )}
                       <span
                         style={{
                           backgroundColor: `${
-                            m.sender === user?.user?._id ? "#fff" : "#fff"
+                            m.sender == user?.user?._id ? "#fff" : "#fff"
                           }`,
                           borderRadius: "20px",
                           padding: "5px 15px",
                           maxWidth: "75%",
                           marginLeft:
-                            m.senderRole === "Customer"
+                            m.senderRole === "Seller"
                               ? "auto"
                               : !isSameUser(messages, m, i) === false
                               ? "36px"
@@ -242,7 +233,7 @@ const ChatPage = () => {
         }}
       >
         <span
-          style={{ color: "#424874", cursor:"pointer" }}
+          style={{ color: "#424874", cursor: "pointer" }}
           onClick={() => navigate(`/`)}
         >
           GrabIt
@@ -250,7 +241,7 @@ const ChatPage = () => {
         &nbsp;| &nbsp;
         <span
           style={{ color: "#424874", cursor: "pointer" }}
-          onClick={() => navigate(`/seller/${seller?._id}`)}
+          onClick={() => navigate(`/dashboard/messages-seller`)}
         >
           Back
         </span>
@@ -259,4 +250,4 @@ const ChatPage = () => {
   );
 };
 
-export default ChatPage;
+export default ChatWithUser;

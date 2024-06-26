@@ -294,9 +294,9 @@ export const updateSellerController = async (req, res) => {
       !state ||
       !email ||
       !password ||
-      !discription || !pics || !pic || !type
+      !discription || pics.length < 2 || !pic || !type
     ) {
-      return res.send({ message: "All fields are required" });
+      return res.send({ message: "All fields are required from server" });
     }
 
 
@@ -317,7 +317,40 @@ export const updateSellerController = async (req, res) => {
 
 
   } catch (error) {
-    console.log(error);
+    // console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in updating profile",
+      error,
+    });
+  }
+}
+
+
+export const updateCustomerController = async (req, res) => {
+  try {
+    const { name, phone, email, password, pic } = req.body;
+
+    //validation
+    if (!name || !phone || !email || !password) {
+      return res.send({ message: "All fields are required" });
+    }
+
+    const hashedPassword = await hashPassword(password);
+
+    const user = await customerModel.findByIdAndUpdate(
+      req.user._id,
+      { ...req.body, password: hashedPassword },
+      { new: true }
+    );
+    
+    res.status(201).send({
+      success: true,
+      message: "Profile updated Successfully",
+      user,
+    });
+    
+  } catch (error) {
     res.status(500).send({
       success: false,
       message: "Error in updating profile",

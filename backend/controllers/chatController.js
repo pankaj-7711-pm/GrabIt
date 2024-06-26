@@ -71,3 +71,37 @@ export const sendMessageController = async (req, res) => {
         });
     }
 }
+
+export const getAllChatController = async (req, res) => {
+    try {
+        const { sid } = req.params;
+        const chats = await chatModel.find({ seller: sid }).populate("user");
+        res.status(201).send({
+            success: true,
+            chats
+        })
+    } catch (error) {
+        res.status(500).send({
+          success: false,
+          message: "Error in fetching chats",
+          error,
+        });
+    }
+}
+
+export const getSinleChatController = async (req, res) => {
+    try {
+        const { cid } = req.params;
+        const chat = await chatModel.findOne({ _id: cid }).populate("user");
+        res.status(201).send({
+          success: true,
+          chat,
+        });
+    } catch (error) {
+        res.status(500).send({
+          success: false,
+          message: "Error in fetching chats",
+          error,
+        });
+    }
+}

@@ -83,6 +83,11 @@ const HomePage = () => {
               }}
             >
               <button
+                onClick={() => {
+                  document
+                    .getElementById("category-get-started")
+                    .scrollIntoView({ behavior: "smooth" });
+                }}
                 style={{
                   padding: "1rem",
                   backgroundColor: "#424874",
@@ -117,7 +122,7 @@ const HomePage = () => {
                 alignItems: "center",
               }}
             >
-              <h2 className="featured-seller-text temp-top-seller" >
+              <h2 className="featured-seller-text temp-top-seller">
                 Our <span style={{ color: "#A6B1E1" }}>Top Sellers</span>
               </h2>
             </div>
@@ -138,7 +143,17 @@ const HomePage = () => {
             >
               {sellers?.map((s) => {
                 return (
-                  <div className="sellers-homepage-temp" style={{width:"30%", display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", marginBottom:"1rem"}}>
+                  <div
+                    className="sellers-homepage-temp"
+                    style={{
+                      width: "30%",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginBottom: "1rem",
+                    }}
+                  >
                     <img
                       src={s.pic}
                       style={{
@@ -155,7 +170,12 @@ const HomePage = () => {
                     </p>
                     <div
                       className=" "
-                      style={{ display: "flex", justifyContent: "center", flexDirection:"column", alignItems:"center" }}
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }}
                     >
                       <Rating
                         initialRating={s.rating}
@@ -167,9 +187,10 @@ const HomePage = () => {
                         }
                       />
 
-                      <p className="ms-1" style={{textAlign:"center"}}>{`(${parseFloat(
-                        s?.rating
-                      ).toFixed(1)})`}</p>
+                      <p
+                        className="ms-1"
+                        style={{ textAlign: "center" }}
+                      >{`(${parseFloat(s?.rating).toFixed(1)})`}</p>
                     </div>
                   </div>
                 );
@@ -322,6 +343,7 @@ const HomePage = () => {
           </div>
         </div>
         <div
+          id="category-get-started"
           className="homepage-main-banner"
           style={{
             padding: "5%",
@@ -367,7 +389,7 @@ const HomePage = () => {
                       margin: "2rem 1rem 2rem 0",
                       // color: "#424874",
                       fontSize: "1.4rem",
-                      textAlign:"center"
+                      textAlign: "center",
                     }}
                     onClick={() => navigate(`/${t}`)}
                   >
@@ -379,7 +401,10 @@ const HomePage = () => {
           </div>
         </div>
         <div style={{ marginTop: "0rem" }}>
-          <h2 className="quotes-text" style={{ fontSize: "5rem", textAlign: "center" }}>
+          <h2
+            className="quotes-text"
+            style={{ fontSize: "5rem", textAlign: "center" }}
+          >
             Quotes from <span style={{ color: "#A6B1E1" }}>happy</span> users
           </h2>
           <div

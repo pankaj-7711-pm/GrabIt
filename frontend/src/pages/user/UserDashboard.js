@@ -96,8 +96,8 @@ const UserDashboard = () => {
               {user?.user?.name}
             </h2>
             <div>
-              <Button>Edit Profile</Button>
-              <Button style={{ marginLeft: "3px" }}>Chats</Button>
+              <Button onClick={()=>navigate("/dashboard/update-customer-profile")}>Edit Profile</Button>
+              {/* <Button style={{ marginLeft: "3px" }}>Chats</Button> */}
             </div>
           </div>
         </div>

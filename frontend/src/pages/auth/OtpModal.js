@@ -64,16 +64,16 @@ const OtpModal = ({ children,email,otp,verified }) => {
                 <PinInputField />
               </PinInput>
             </HStack>
-            <Button className='mt-4' onClick={handleSubmit}>
+            <Button className='mt-4 mb-2' onClick={handleSubmit}>
                 Enter
             </Button>
           </ModalBody>
 
-          <ModalFooter>
+          {/* <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>
-          </ModalFooter>
+          </ModalFooter> */}
         </ModalContent>
       </Modal>
     </>

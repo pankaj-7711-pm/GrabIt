@@ -132,6 +132,7 @@ const SeperateSeller = () => {
           isClosable: true,
           position: "top",
         });
+        getReviews();
         handleClose();
       }
     } catch (error) {}

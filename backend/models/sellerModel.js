@@ -61,7 +61,7 @@ const sellerSchema = mongoose.Schema({
   },
   type: {
     type: String,
-    // required: true,
+    required: true,
   },
   rating: {
     type: Number,

@@ -46,6 +46,8 @@ const CustomerRegister = () => {
   const [picLoading, setPicLoading] = useState(false);
   const [isSeller, setIsSeller] = useState(true);
   const [type, setType] = useState("");
+  const [otpLoading, setOtpLoading] = useState(false);
+
 
   const [page, setPage] = useState(0);
 
@@ -154,6 +156,7 @@ const CustomerRegister = () => {
       });
       return;
     }
+    setOtpLoading(true);
     try {
       const { data } = await axios.post("/api/v1/auth/sendotp", { email });
       if (data?.success) {
@@ -169,6 +172,7 @@ const CustomerRegister = () => {
           position: "top",
         });
       }
+      setOtpLoading(false);
     } catch (error) {
       toast({
         title: "Something went wrong",
@@ -177,6 +181,7 @@ const CustomerRegister = () => {
         isClosable: true,
         position: "top",
       });
+      setOtpLoading(false);
     }
   };
 
@@ -197,6 +202,16 @@ const CustomerRegister = () => {
     if (discription.length < 200) {
       toast({
         title: "Discription should be more than 200 characters",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+      return;
+    }
+    if (pics.length < 2) {
+      toast({
+        title: "There should be atleast 2 pics other than profile pic",
         status: "warning",
         duration: 5000,
         isClosable: true,
@@ -287,7 +302,7 @@ const CustomerRegister = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
               <InputRightElement width={"4.5rem"}>
-                <Button h={"1.75rem"} size="sm" onClick={handleClickEmail}>
+                <Button h={"1.75rem"} size="sm" onClick={handleClickEmail} isLoading={otpLoading}>
                   Verify
                 </Button>
               </InputRightElement>

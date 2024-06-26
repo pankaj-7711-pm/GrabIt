@@ -43,6 +43,10 @@ body{
   
 }
 
+.open-chat-seller-page:hover{
+  color: #424874;
+}
+
 .categories-homepage:hover{
   /* color: #A6B1E1 !important; */
   /* color: #424874 !important; */
