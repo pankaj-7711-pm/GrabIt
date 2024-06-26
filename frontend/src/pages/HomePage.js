@@ -117,7 +117,7 @@ const HomePage = () => {
                 alignItems: "center",
               }}
             >
-              <h2 className="featured-seller-text" >
+              <h2 className="featured-seller-text temp-top-seller" >
                 Our <span style={{ color: "#A6B1E1" }}>Top Sellers</span>
               </h2>
             </div>
@@ -138,12 +138,12 @@ const HomePage = () => {
             >
               {sellers?.map((s) => {
                 return (
-                  <div>
+                  <div className="sellers-homepage-temp" style={{width:"30%", display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", marginBottom:"1rem"}}>
                     <img
                       src={s.pic}
                       style={{
-                        height: "10rem",
-                        width: "10rem",
+                        height: "12rem",
+                        width: "12rem",
                         borderRadius: "5px",
                       }}
                       alt=""

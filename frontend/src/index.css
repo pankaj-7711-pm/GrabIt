@@ -332,3 +332,21 @@ body{
 }
 }
 
+/* messages-container */
+
+@media (max-width: 800px){
+  .messages-container{
+    width: 80% !important;
+  }
+}
+
+/* .sellers-homepage-temp */
+
+@media (max-width: 600px){
+  .sellers-homepage-temp{
+    width: 100% !important;
+  }
+  .temp-top-seller{
+    text-align: center !important;
+  }
+}
