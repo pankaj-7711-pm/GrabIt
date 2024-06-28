@@ -60,6 +60,10 @@ body{
   color: rgb(240, 225, 12);
 }
 
+.all-right-div{
+  color: rgb(240, 227, 227) !important;
+}
+
 .aa{
   border: 1px solid rgb(195, 194, 194) !important;
 }
@@ -352,5 +356,50 @@ body{
   }
   .temp-top-seller{
     text-align: center !important;
+  }
+}
+
+@media (max-width:768px){
+  .footer-para-main{
+    text-align: center !important;
+  }
+  .hr-footer{
+    display: block !important;
+  }
+  .search-div-category-wise-seller{
+    width: 100% !important;
+  }
+}
+
+/* .contact-us */
+
+@media (max-width:590px){
+  .contact-us{
+    width: 90% !important;
+    padding: 1rem;
+  }
+}
+/* login-main-aa */
+
+@media (max-width:350px){
+  .login-main{
+    width: 80% !important;
+    
+  }
+  .login-main-bb{
+    width: 13rem !important;
+  }
+  
+  
+}
+@media (max-width:460px){
+  .aa{
+    width: 90% !important;
+  }
+  .customer-register-aa{
+    width: 100%;
+  }
+  .register-seller-aa{
+    width: 14rem !important;
   }
 }

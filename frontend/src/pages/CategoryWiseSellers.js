@@ -77,6 +77,7 @@ const CategoryWiseSellers = () => {
           }}
         >
           <TextField
+            className="search-div-category-wise-seller"
             style={{ width: "60%" }}
             variant="outlined"
             onChange={(e) => setCty(e.target.value)}
@@ -105,7 +106,7 @@ const CategoryWiseSellers = () => {
         <div>
           <h2 style={{ textAlign: "center", fontSize: "3rem" }}>{category}</h2>
           {/* <p>Showing All Sellers</p> */}
-          {city && (<p>Showing sellers of <span>{city}</span></p>)}
+          {city && (<p style={{textAlign:"center"}}>Showing sellers of <span>{city}</span></p>)}
           {len == 0 && (
             <div
               style={{
@@ -169,7 +170,7 @@ const CategoryWiseSellers = () => {
                     <h5
                       className="card-title"
                       style={{
-                        fontSize: "3rem",
+                        fontSize: "2rem",
                         textAlign: "center",
                         background:
                           "linear-gradient(90deg, #a1c4fd 0%, #c2e9fb 100%)",
@@ -183,7 +184,7 @@ const CategoryWiseSellers = () => {
                       <Rating
                         initialRating={s.rating}
                         readonly
-                        fullSymbol={<FaStar size={24} color="#A6B1E1" />}
+                        fullSymbol={<FaStar size={24} color="yellow" />}
                         emptySymbol={<FaRegStar size={24} color="#fff" />}
                         placeholderSymbol={
                           <FaStarHalfAlt size={24} color="yellow" />

@@ -4,10 +4,10 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
-import Rating from "react-rating";
+// import Rating from "react-rating";
 import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
-import { Pagination } from "@mui/material";
-
+import { Pagination, Rating } from "@mui/material";
+// import { Avatar, Rating } from "@mui/material";
 
 
 const CategoryWiseProducts = () => {
@@ -105,7 +105,11 @@ const CategoryWiseProducts = () => {
         >
           {products?.map((product) => {
             return (
-              <div className="card" onClick={()=>navigate(`/individual-product/${product._id}`)} style={{ width: "18rem", margin: "1rem", cursor:"pointer" }}>
+              <div
+                className="card"
+                onClick={() => navigate(`/individual-product/${product._id}`)}
+                style={{ width: "18rem", margin: "1rem", cursor: "pointer" }}
+              >
                 <Slider {...settings}>
                   {product.pics.map((image, index) => (
                     <div key={index}>
@@ -121,7 +125,11 @@ const CategoryWiseProducts = () => {
                 <div className="card-body d-flex flex-column mt-2 pb-0">
                   <div style={{ display: "flex" }}>
                     <h5 className="card-title" style={{ marginBottom: "8px" }}>
-                      {product.name}
+                      {product.name?.length > 10 ? (
+                        <>{product.name.slice(0, 10)}...</>
+                      ) : (
+                        <>{product.name}</>
+                      )}
                     </h5>
                     <p
                       style={{
@@ -155,7 +163,7 @@ const CategoryWiseProducts = () => {
                       <div style={{ display: "flex" }}>
                         <p
                           style={{
-                            marginBottom:"8px",
+                            marginBottom: "8px",
                             fontSize: "1.2rem",
                             fontWeight: "bold",
                             background:
@@ -184,7 +192,7 @@ const CategoryWiseProducts = () => {
                         `}</style>
                         <p
                           style={{
-                            marginBottom:"8px",
+                            marginBottom: "8px",
                             marginLeft: "auto",
                             minWidth: "3rem",
                             color: "#A6B1E1",
@@ -199,17 +207,17 @@ const CategoryWiseProducts = () => {
                   )}
                   <div className="d-flex ">
                     <Rating
-                      initialRating={product.rating}
-                      readonly
-                      fullSymbol={<FaStar size={24} color="#424874" />}
-                      emptySymbol={<FaRegStar size={24} color="#A6B1E1" />}
-                      placeholderSymbol={
-                        <FaStarHalfAlt size={24} color="yellow" />
-                      }
+                      style={{ margin: "1px 0 5px 0" }}
+                      name="half-rating-read"
+                      value={`${product.rating}`}
+                      precision={0.1}
+                      size="medium"
+                      readOnly
                     />
-                    <p className="ms-1" style={{marginBottom:"8px"}}>{`(${parseFloat(
-                      product?.rating
-                    ).toFixed(1)})`}</p>
+                    <p
+                      className="ms-1"
+                      style={{ marginBottom: "8px", marginTop:"2px" }}
+                    >{`(${parseFloat(product?.rating).toFixed(1)})`}</p>
                   </div>
                   <p className="card-text" style={{ margin: "0" }}>
                     {product.description.length > 30

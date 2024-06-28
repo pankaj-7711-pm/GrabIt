@@ -197,7 +197,7 @@ const CustomerRegister = () => {
   }
 
   return (
-    <div style={{}}>
+    <div className="customer-register-aa" style={{}}>
       <FormControl id="first-name" isRequired>
         <FormLabel>Name</FormLabel>
         <Input
@@ -310,11 +310,11 @@ const CustomerRegister = () => {
           <Button
             colorScheme="blue"
             width={"100%"}
-            style={{ marginTop: 15 }}
+            style={{ marginTop: 15, display:"flex", justifyContent:"center", flexWrap:"wrap" }}
             isLoading={picLoading}
             isDisabled
           >
-            Verify your email to continue
+            Verify your email
           </Button>
         </>
       ) : (

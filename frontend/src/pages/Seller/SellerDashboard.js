@@ -3,7 +3,7 @@ import Layout from "../../components/layout/Layout";
 import { ConState } from "../../context/ConProvider";
 // import { Button } from "@chakra-ui/react";
 import StarRatingComponent from "react-star-rating-component";
-import Rating from "react-rating";
+// import Rating from "react-rating";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ import "slick-carousel/slick/slick-theme.css";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
-import { Accordion, AccordionDetails, AccordionSummary, Avatar, Button } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Avatar, Button, Rating } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 import { styled } from "@mui/material/styles";
 
@@ -132,13 +132,11 @@ const SellerDashboard = () => {
                         style={{ display: "flex", justifyContent: "center" }}
                       >
                         <Rating
-                          initialRating={user?.user.rating}
-                          readonly
-                          fullSymbol={<FaStar size={24} color="#424874" />}
-                          emptySymbol={<FaRegStar size={24} color="#A6B1E1" />}
-                          placeholderSymbol={
-                            <FaStarHalfAlt size={24} color="yellow" />
-                          }
+                          name="half-rating-read"
+                          value={`${user?.user?.rating}`}
+                          precision={0.1}
+                          size="medium"
+                          readOnly
                         />
                         <p className="ms-1">{`(${parseFloat(
                           user?.user?.rating
@@ -368,15 +366,11 @@ const SellerDashboard = () => {
 
                         <div className="d-flex ">
                           <Rating
-                            initialRating={product.rating}
-                            readonly
-                            fullSymbol={<FaStar size={24} color="#424874" />}
-                            emptySymbol={
-                              <FaRegStar size={24} color="#A6B1E1" />
-                            }
-                            placeholderSymbol={
-                              <FaStarHalfAlt size={24} color="yellow" />
-                            }
+                            name="half-rating-read"
+                            value={`${product.rating}`}
+                            precision={0.1}
+                            size="medium"
+                            readOnly
                           />
                           <p className="ms-1">{`(${parseFloat(
                             product?.rating
@@ -442,7 +436,6 @@ const SellerDashboard = () => {
                   );
                 })}
               </div>
-              
             </div>
           </div>
         </div>

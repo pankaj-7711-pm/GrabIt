@@ -91,7 +91,7 @@ const SellerLogin = () => {
         alignItems: "center",
       }}
     >
-      <div style={{ width: "16rem" }}>
+      <div className="login-main-bb" style={{ width: "16rem" }}>
         <FormControl id="email" isRequired>
           <FormLabel>Email address</FormLabel>
           <Input
@@ -125,8 +125,20 @@ const SellerLogin = () => {
         >
           Sign in
         </Button>
-        <p style={{ fontWeight: "lighter", marginTop:"1rem", marginBottom:"0" }}>
-          Don't have an account? <span style={{ color: "blue", cursor:"pointer"}} onClick={()=>navigate("/register")}>Sign up</span>
+        <p
+          style={{
+            fontWeight: "lighter",
+            marginTop: "1rem",
+            marginBottom: "0",
+          }}
+        >
+          Don't have an account?{" "}
+          <span
+            style={{ color: "blue", cursor: "pointer" }}
+            onClick={() => navigate("/register")}
+          >
+            Sign up
+          </span>
         </p>
       </div>
     </div>

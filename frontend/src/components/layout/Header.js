@@ -53,7 +53,7 @@ const Header = () => {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span className="navbar-toggler-icon" style={{color:"black"}} />
+            <span className="navbar-toggler-icon" style={{ color: "black" }} />
           </button>
           <div
             className="collapse navbar-collapse navbar-main-div"
@@ -87,8 +87,19 @@ const Header = () => {
               ) : (
                 <>
                   <Menu>
-                    <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-                      <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+                    <MenuButton
+                      style={{ backgroundColor: "#DCD6F7", padding:"0" }}
+                      as={Button}
+                      rightIcon={<ChevronDownIcon />}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          // justifyContent: "center",
+                            alignItems: "center",
+                          fontWeight:"300"
+                        }}
+                      >
                         <Avatar size="sm" src={user?.user?.pic} />
                         &nbsp;{user?.user?.name}
                       </div>

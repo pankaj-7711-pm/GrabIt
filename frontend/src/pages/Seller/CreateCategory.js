@@ -151,6 +151,7 @@ const CreateCategory = () => {
           isClosable: true,
           position: "top",
         });
+        setName("");
         getCategories();
       }
     } catch (error) {
@@ -181,6 +182,7 @@ const CreateCategory = () => {
               className="category-inp"
               style={{ width: "50%", marginTop: "5rem" }}
               id="outlined-basic"
+              value={name}
               label="Category name"
               variant="outlined"
               InputProps={{

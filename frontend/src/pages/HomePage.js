@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/layout/Layout";
 import axios from "axios";
-import Rating from "react-rating";
+// import Rating from "react-rating";
 import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import { ShopTypes } from "./ShopType";
 import { useNavigate } from "react-router-dom";
 import { Quotes } from "./Quotes";
-import { Avatar } from "@mui/material";
+import { Avatar, Rating } from "@mui/material";
 
 const divStyle = {
   backgroundImage: 'url("/landingpage.jpg")',
@@ -164,7 +164,7 @@ const HomePage = () => {
                       alt=""
                     />
                     <p
-                      style={{ margin: "0", padding: "0", textAlign: "center" }}
+                      style={{ margin: "0", padding: "0", textAlign: "center", fontSize:"20px", fontWeight:"500"}}
                     >
                       {s.name}
                     </p>
@@ -174,17 +174,16 @@ const HomePage = () => {
                         display: "flex",
                         justifyContent: "center",
                         flexDirection: "column",
-                        alignItems: "center",
+                        alignItems: "center"
                       }}
                     >
                       <Rating
-                        initialRating={s.rating}
-                        readonly
-                        fullSymbol={<FaStar size={24} color="#424874" />}
-                        emptySymbol={<FaRegStar size={24} color="#A6B1E1" />}
-                        placeholderSymbol={
-                          <FaStarHalfAlt size={24} color="yellow" />
-                        }
+                        style={{margin:"1px 0 5px 0"}}
+                        name="half-rating-read"
+                        value={`${s.rating}`}
+                        precision={0.1}
+                        size="large"
+                        readOnly
                       />
 
                       <p

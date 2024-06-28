@@ -598,6 +598,7 @@ const CustomerRegister = () => {
 
   return (
     <div
+      className="register-seller-aa"
       style={{
         width: "22.3rem",
       }}

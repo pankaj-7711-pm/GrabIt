@@ -92,7 +92,7 @@ const CustomerLogin = () => {
         alignItems: "center",
       }}
     >
-      <div style={{ width: "16rem" }}>
+      <div className="login-main-bb" style={{ width: "16rem" }}>
         <FormControl id="email" isRequired>
           <FormLabel>Email address</FormLabel>
           <Input

@@ -112,7 +112,7 @@ const CreateProduct = () => {
     }
     if (pics.length < 2) {
       toast({
-        title: "There should be atleast two images",
+        title: "There should be atleast two images of the product",
         status: "warning",
         duration: 5000,
         isClosable: true,
@@ -120,9 +120,9 @@ const CreateProduct = () => {
       });
       return;
     }
-    if (description.length < 200) {
+    if (description.length < 100) {
       toast({
-        title: "Product description should be of atleast 200 characters",
+        title: "Product description should be of atleast 100 characters",
         status: "warning",
         duration: 5000,
         isClosable: true,

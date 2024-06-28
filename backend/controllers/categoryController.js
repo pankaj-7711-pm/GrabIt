@@ -1,6 +1,7 @@
 import categoryModel from "../models/categoryModel.js";
 import productModel from "../models/productModel.js";
 import sellerModel from "../models/sellerModel.js";
+import wishlistModel from "../models/wishlistModel.js";
 
 export const createCategoryController = async (req, res) => {
   try {
@@ -77,6 +78,10 @@ export const getCategoryController = async (req, res) => {
 export const deleteCategoryController = async (req, res) => {
   try {
     await categoryModel.findByIdAndDelete(req.params.cid);
+    const temp = await productModel.find({ category: req.params.cid }).select("_id");
+
+    await wishlistModel.deleteMany({ product: { $in: temp } });
+
     const result = await productModel.deleteMany({
       category: req.params.cid,
     });

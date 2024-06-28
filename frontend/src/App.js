@@ -20,6 +20,8 @@ import SeperateProduct from './pages/SeperateProduct';
 import ChatPage from './pages/user/ChatPage';
 import ChatWithUser from './pages/Seller/ChatWithUser';
 import UpdateProfileCustomer from './pages/user/UpdateProfileCustomer';
+import Policy from './pages/Policy';
+import Contact from './pages/Contact';
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/about" element={<AboutUs />} />
+        <Route path="/policy" element={<Policy />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/:categoryname" element={<CategoryWiseSellers />} />
         <Route path="/seller/:sid" element={<SeperateSeller />} />
         <Route path="/individual-product/:pid" element={<SeperateProduct />} />
@@ -38,7 +42,10 @@ function App() {
         />
         <Route path="/dashboard" element={<UserRoute />}>
           <Route path="user" element={<UserDashboard />} />
-          <Route path="update-customer-profile" element={<UpdateProfileCustomer />} />
+          <Route
+            path="update-customer-profile"
+            element={<UpdateProfileCustomer />}
+          />
           <Route path="chat-with-seller/:sid" element={<ChatPage />} />
         </Route>
         <Route path="/dashboard" element={<SellerRoute />}>
