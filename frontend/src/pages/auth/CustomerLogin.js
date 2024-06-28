@@ -43,10 +43,13 @@ const CustomerLogin = () => {
     try {
       
 
-      const { data } = await axios.post("/api/v1/auth/login-customer", {
-        email,
-        password,
-      });
+      const { data } = await axios.post(
+        "/api/v1/auth/login-customer",
+        {
+          email,
+          password,
+        }
+      );
       if (data?.success) {
         toast({
           title: "Login Successful",
